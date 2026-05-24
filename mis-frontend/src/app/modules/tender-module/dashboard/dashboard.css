@@ -1,0 +1,245 @@
+/* dashboard.component.css - Frosted Glass & Midnight Calm Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ================================================
+   DASHBOARD THEME - FROSTED GLASS & MIDNIGHT CALM
+   Seamless extension of the Landing Page Identity
+   Enhanced: Menu cards hover with dark gradient + bold white text
+   ================================================ */
+
+/* Dashboard Wrapper — Glass Canvas */
+.dashboard-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+  background-attachment: fixed;
+  position: relative;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Subtle grain texture overlay (premium tactile feel) */
+.dashboard-wrapper::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content sits above grain */
+.dashboard-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===========================================
+   HEADER & TITLE — Gradient with signature underline
+   =========================================== */
+.dashboard-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: linear-gradient(120deg, #1A2F4F, #1F4172);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin: 0 0 0.5rem 0;
+  position: relative;
+  display: inline-block;
+}
+
+.dashboard-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 3px;
+  background: linear-gradient(90deg, #2A4E77, #103783);
+  border-radius: 3px;
+}
+
+/* ===========================================
+   SUMMARY CARDS — Rich gradients (Midnight Calm palette)
+   Smooth elevation & hover (enhanced)
+   =========================================== */
+.dashboard-card {
+  border: none;
+  border-radius: 2rem;
+  padding: 1.6rem 1.2rem;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: default;
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.02);
+  background: linear-gradient(145deg, #1E4A6B, #123552);
+  color: white;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 38px -16px rgba(16, 55, 131, 0.3);
+  filter: brightness(1.02);
+}
+
+/* Card title inside summary card */
+.dashboard-card .card-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  opacity: 0.85;
+  color: inherit;
+}
+
+/* Override text color classes inside the card for better readability */
+.dashboard-card .text-secondary,
+.dashboard-card .text-warning,
+.dashboard-card .text-success,
+.dashboard-card .text-danger,
+.dashboard-card .active-text,
+.dashboard-card .closed-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Card value (main number) */
+.card-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0;
+  word-break: break-word;
+  letter-spacing: -0.5px;
+}
+
+/* Small stats line (online/offline) */
+.dashboard-card .small {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.dashboard-card .text-success,
+.dashboard-card .text-dark {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Custom colors for Active and Closed projects (keep consistent) */
+.active-text,
+.closed-text {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* ===========================================
+   MODULE CARDS (Navigation) — ENHANCED HOVER:
+   Dark gradient background + white bold text
+   =========================================== */
+.module-card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(0px);
+  border-radius: 2rem;
+  padding: 1.5rem 0.8rem;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+/* Dark gradient on hover, transforms, deeper shadow */
+.module-card:hover {
+  transform: translateY(-6px);
+  background: linear-gradient(135deg, #0F2A4A, #080F1A);
+  /* deep midnight gradient */
+  box-shadow: 0 28px 38px -12px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Base heading style — clean, medium weight, dark slate */
+.module-card h4 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  color: #162b3c;
+  letter-spacing: -0.2px;
+  transition: all 0.25s ease;
+}
+
+/* On hover: text becomes WHITE and BOLD */
+.module-card:hover h4 {
+  color: #FFFFFF;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  transform: scale(1.01);
+}
+
+/* Focus state for keyboard navigation */
+.module-card:focus-visible {
+  outline: 2px solid #1F6E8C;
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   RESPONSIVE REFINEMENTS
+   =========================================== */
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    padding: 1.5rem 1.2rem 2rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.6rem;
+  }
+
+  .card-value {
+    font-size: 1.6rem;
+  }
+
+  .dashboard-card {
+    padding: 1.2rem;
+  }
+
+  .module-card h4 {
+    font-size: 1rem;
+  }
+
+  .module-card {
+    padding: 1.2rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .module-card {
+    padding: 1rem 0.5rem;
+  }
+
+  .module-card h4 {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===========================================
+   ELEGANT SCROLLBAR (Matches main theme)
+   =========================================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef2f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

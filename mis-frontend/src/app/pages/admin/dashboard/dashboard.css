@@ -1,0 +1,203 @@
+/* ======================================================
+   ADMIN DASHBOARD - FROSTED GLASS & MIDNIGHT CALM
+   Consistent with Select Firm theme
+   ====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+
+/* ----- BASE & RESET ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  background: #EFF3F8;
+}
+
+/* Main container – uses the same gradient + grain texture */
+.container.mt-4 {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem 2rem 3rem;
+  background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+  background-attachment: fixed;
+  border-radius: 2rem;
+  position: relative;
+  box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+}
+
+/* Grain overlay */
+.container.mt-4::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ----- TITLE ----- */
+h3.text-center {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, #1A2F4F, #1F4172);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.3px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ----- HEADER BUTTONS (frosted glass panel) ----- */
+.d-flex.justify-content-end {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 3rem;
+  padding: 0.6rem 1.5rem;
+  margin-bottom: 2.5rem !important;
+  gap: 1rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: 2.5rem;
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+  border: none;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* Back to Firms – blue‑black gradient on hover */
+.btn-outline-primary {
+  color: #1C3F6E;
+  background: #FFFFFFF0;
+  border: 1px solid #CCD8E6;
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, #0F3F7A, #0A1828) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-1px);
+}
+
+/* Logout – red‑black gradient on hover */
+.btn-outline-danger {
+  color: #b02a37;
+  background: #FFFFFFF0;
+  border: 1px solid #f5c2c7;
+}
+
+.btn-outline-danger:hover {
+  background: linear-gradient(135deg, #B22234, #2B0A0A) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-1px);
+}
+
+/* ----- DASHBOARD CARDS (same style as firm cards) ----- */
+.row {
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.col-md-4 {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(0px);
+  border-radius: 2rem;
+  padding: 2rem 1.5rem;
+  transition: all 0.25s ease-out;
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.card h5 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #162b3c;
+  margin: 0;
+  letter-spacing: -0.2px;
+  transition: color 0.2s;
+}
+
+/* Hover effect – subtle lift + gradient background */
+.card:hover {
+  transform: translateY(-6px);
+  background: linear-gradient(145deg, #2C5270, #103A66);
+  box-shadow: 0 28px 38px -16px rgba(16, 55, 131, 0.18), 0 2px 6px rgba(0, 0, 0, 0.02);
+  border-color: rgba(181, 198, 224, 0.6);
+}
+
+.card:hover h5 {
+  color: white;
+}
+
+/* Click feedback */
+.card:active {
+  transform: scale(0.97);
+}
+
+/* Focus outline for accessibility */
+.btn:focus-visible,
+.card:focus-visible {
+  outline: 2px solid #1F6E8C;
+  outline-offset: 2px;
+}
+
+/* ----- RESPONSIVE TWEAKS ----- */
+@media (max-width: 768px) {
+  .container.mt-4 {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .d-flex.justify-content-end {
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+
+  .btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .card h5 {
+    font-size: 1.1rem;
+  }
+
+  h3.text-center {
+    font-size: 1.6rem;
+  }
+}

@@ -1,0 +1,586 @@
+/* ================================================
+   MANAGE USERS - FROSTED GLASS & MIDNIGHT CALM THEME
+   Integrated with Professional MIS Theme
+   ================================================ */
+
+/* --- Alert Messages (Toast-like) --- */
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.85);
+    color: #064e3b;
+    border-left: 5px solid #059669;
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.85);
+    color: #7f1d1d;
+    border-left: 5px solid #dc2626;
+}
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.85);
+    color: #78350f;
+    border-left: 5px solid #f59e0b;
+}
+
+/* --- Container & Layout Enhancements --- */
+.container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Card - Frosted Glass Premium Effect */
+.card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(2px);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0 24px 42px -16px rgba(16, 55, 131, 0.15);
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.card.p-4 {
+    padding: 2rem !important;
+}
+
+/* Page Title with Underline Accent */
+h3.text-center {
+    font-size: 1.85rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, #1A2F4F, #1F4172);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    margin-bottom: 2rem !important;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+h3.text-center::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A4E77, #6C9BCF);
+    border-radius: 3px;
+}
+
+/* Form Controls - Modern Rounded Inputs */
+.form-control,
+select.form-control {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e2edf7;
+    border-radius: 1.25rem;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1a2f3e;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.form-control:focus,
+select.form-control:focus {
+    border-color: #2A4E77;
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.2);
+    outline: none;
+    background: white;
+}
+
+/* Labels Clean Typography */
+label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    color: #2c4b6e;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+label strong {
+    font-weight: 700;
+    color: #10355e;
+    text-transform: none;
+    font-size: 0.85rem;
+}
+
+/* Firm Grid - with Frosted Scroll */
+.firm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8rem 1.5rem;
+    background: rgba(248, 250, 252, 0.7);
+    padding: 1rem 1.2rem;
+    border-radius: 1.5rem;
+    border: 1px solid #eef2f8;
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+}
+
+.firm-grid div {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1f3a4b;
+    padding: 0.2rem 0;
+}
+
+.firm-grid input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    accent-color: #2A4E77;
+    margin: 0;
+    transition: transform 0.1s ease;
+}
+
+.firm-grid input[type="checkbox"]:hover {
+    transform: scale(1.05);
+}
+
+/* Custom Scrollbar for Firm Grid */
+.firm-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.firm-grid::-webkit-scrollbar-track {
+    background: #dfe8f0;
+    border-radius: 10px;
+}
+
+.firm-grid::-webkit-scrollbar-thumb {
+    background: #2A4E77;
+    border-radius: 10px;
+}
+
+/* Buttons Row: Save + Cancel Edit */
+.mt-3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 1.5rem;
+}
+
+/* Primary Save Button (Create/Update) */
+.btn-success {
+    background: linear-gradient(105deg, #2C5270, #103A66);
+    border: none;
+    border-radius: 2.5rem;
+    padding: 0.7rem 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    color: white;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(16, 55, 131, 0.2);
+    min-width: 140px;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(105deg, #1F486B, #0C2D53);
+    box-shadow: 0 8px 18px rgba(12, 45, 83, 0.25);
+}
+
+/* Cancel Edit Button (Only visible during edit) */
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid #ccdbe9;
+    border-radius: 2.5rem;
+    padding: 0.7rem 1.8rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4a627a;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.btn-cancel:hover {
+    background: #fff0ed;
+    border-color: #c0a090;
+    color: #b91c1c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Table Styles (Premium & Readable) --- */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: transparent;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: linear-gradient(115deg, #1e2f40, #152838);
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 1rem;
+    border-bottom: none;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 1rem 0.9rem;
+    vertical-align: middle;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1f3a4b;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: background 0.2s;
+}
+
+.table tbody tr:hover td {
+    background-color: rgba(255, 250, 240, 0.9);
+}
+
+/* Action Column Fixed Width + Centered Buttons */
+.table th:last-child,
+.table td:last-child {
+    text-align: center;
+    width: 220px;
+    min-width: 200px;
+}
+
+/* Action Buttons Row (Horizontal) */
+.d-flex.gap-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* Base Button Styles Inside Table */
+.table .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 2rem;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    min-width: 85px;
+    cursor: pointer;
+    border: none;
+    letter-spacing: 0.3px;
+}
+
+/* Edit Button */
+.table .btn-primary {
+    background: white;
+    border: 1.5px solid #2A4E77;
+    color: #1F4172;
+}
+
+.table .btn-primary:hover {
+    background: #2A4E77;
+    border-color: #2A4E77;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(42, 78, 119, 0.3);
+}
+
+/* Deactivate Button */
+.table .btn-danger {
+    background: linear-gradient(105deg, #dc2626, #991b1b);
+    color: white;
+}
+
+.table .btn-danger:hover {
+    background: linear-gradient(105deg, #b91c1c, #7f1d1d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Activate Button */
+.table .btn-success {
+    background: linear-gradient(105deg, #10b981, #059669);
+    color: white;
+}
+
+.table .btn-success:hover {
+    background: linear-gradient(105deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(5, 150, 105, 0.3);
+}
+
+/* Status Column Styling */
+/* ============================================
+   ROLE & STATUS BADGES
+   ============================================ */
+
+/* Shared Badge Style */
+
+.role-badge,
+.status-badge {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 95px;
+
+    padding: 0.45rem 0.9rem;
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+
+    border: 1px solid transparent;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.06);
+
+    backdrop-filter: blur(6px);
+}
+
+
+/* ================= ROLE ================= */
+
+/* Admin */
+
+.role-admin {
+
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.18),
+            rgba(67, 56, 202, 0.18));
+
+    color: #312e81;
+
+    border-color: rgba(99, 102, 241, 0.25);
+}
+
+
+/* User */
+
+.role-user {
+
+    background: linear-gradient(135deg,
+            rgba(14, 165, 233, 0.18),
+            rgba(2, 132, 199, 0.18));
+
+    color: #0c4a6e;
+
+    border-color: rgba(14, 165, 233, 0.25);
+}
+
+
+/* ================= STATUS ================= */
+
+/* Active */
+
+.status-active {
+
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.18),
+            rgba(5, 150, 105, 0.18));
+
+    color: #065f46;
+
+    border-color: rgba(16, 185, 129, 0.25);
+}
+
+
+/* Inactive */
+
+.status-inactive {
+
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.18),
+            rgba(220, 38, 38, 0.18));
+
+    color: #991b1b;
+
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* Responsive Table Wrapper */
+.table-responsive {
+    border-radius: 1.5rem;
+    overflow: auto;
+    box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.06);
+}
+
+/* Dropdown Custom Arrow */
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b6e9e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .card.p-4 {
+        padding: 1.25rem !important;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .col-md-3,
+    .col-md-9 {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .firm-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        max-height: 180px;
+    }
+
+    .table th:last-child,
+    .table td:last-child {
+        width: 190px;
+        min-width: 180px;
+    }
+
+    .table .btn-sm {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.65rem;
+        min-width: 70px;
+    }
+
+    .d-flex.gap-2 {
+        gap: 8px !important;
+    }
+
+    .mt-3 {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-success,
+    .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    h3.text-center {
+        font-size: 1.5rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .table .btn-sm {
+        min-width: 60px;
+        padding: 0.25rem 0.4rem;
+        font-size: 0.6rem;
+    }
+}
+
+/* Optional: Sticky Table Header */
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+/* Focus visible for accessibility */
+.btn:focus-visible,
+.form-control:focus-visible,
+.firm-grid input:focus-visible {
+    outline: 2px solid #2A4E77;
+    outline-offset: 2px;
+}
+
+
+/* ================= DASHBOARD BUTTON ================= */
+
+.btn-dashboard {
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1.5px solid #cfdceb;
+
+    color: #1F4172;
+
+    border-radius: 2.5rem;
+
+    padding: 0.7rem 1.6rem;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    transition: all 0.22s ease;
+
+    backdrop-filter: blur(6px);
+
+    box-shadow:
+        0 6px 14px rgba(15, 23, 42, 0.06);
+}
+
+.btn-dashboard:hover {
+
+    background: linear-gradient(120deg,
+            #1F4172,
+            #2A4E77);
+
+    color: white;
+
+    border-color: #1F4172;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(31, 65, 114, 0.25);
+}

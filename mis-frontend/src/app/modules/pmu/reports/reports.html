@@ -1,0 +1,266 @@
+<div class="container mt-3">
+
+    <h3 class="mb-3">PMU Reports</h3>
+
+    <!-- EXPORT ALL -->
+    <div class="mb-3 text-end">
+        <button class="btn btn-danger btn-sm me-2" (click)="exportAllPDF()">
+            Export All PDF
+        </button>
+    </div>
+
+    <!-- GRAND TOTAL -->
+    <div class="alert alert-primary fw-bold">
+        Grand Total Expense : ₹ {{ grandTotal }}
+    </div>
+
+    <!-- ================= WOOD ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Wood Expense</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportWoodPDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportWoodExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Wood</th>
+                <th>Cubic</th>
+                <th>Rate</th>
+                <th>Cut</th>
+                <th>Plan</th>
+                <th>Trans</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of wood">
+                <td>{{ r.expense_date }}</td>
+                <td>{{ r.wood_type }}</td>
+                <td>{{ r.cubic }}</td>
+                <td>{{ r.rate_per_cubic }}</td>
+                <td>{{ r.cutting_expense }}</td>
+                <td>{{ r.planing_expense }}</td>
+                <td>{{ r.transportation_expense }}</td>
+                <td>{{ r.total_expense }}</td>
+            </tr>
+            <tr class="fw-bold">
+                <td colspan="7">Total</td>
+                <td>{{ sum(wood,'total_expense') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= PLYWOOD ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Plywood Purchase</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportPlywoodPDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportPlywoodExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Sqft</th>
+                <th>Rate</th>
+                <th>Sqft Amount</th>
+                <th>Transport</th>
+                <th>Paid</th>
+                <th>Total Expense</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of plywood">
+                <td>{{ r.purchase_date }}</td>
+                <td>{{ r.square_feet }}</td>
+                <td>{{ r.rate_per_sqft }}</td>
+                <td>{{ r.sqft_amount }}</td>
+                <td>{{ r.transportation }}</td>
+                <td>{{ r.paid }}</td>
+                <td>{{ r.total_expense }}</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="fw-bold">Total</td>
+                <td class="fw-bold">{{ sum(plywood,'total_expense') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= LABOUR ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Labour Cost</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportLabourPDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportLabourExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Team</th>
+                <th>Basis</th>
+                <th>Paid</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of labour">
+                <td>{{ r.work_date }}</td>
+                <td>{{ r.team_name }}</td>
+                <td>{{ r.basis }}</td>
+                <td>{{ r.paid }}</td>
+                <td>{{ r.total_amount }}</td>
+            </tr>
+            <tr class="fw-bold">
+                <td colspan="4">Total</td>
+                <td>{{ sum(labour,'total_amount') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= ACCESSORIES ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Accessories Purchase</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportAccessoriesPDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportAccessoriesExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Accessory</th>
+                <th>Amount</th>
+                <th>Transport</th>
+                <th>Other</th>
+                <th>Paid</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of accessories">
+                <td>{{ r.purchase_date }}</td>
+                <td>{{ r.accessory_name }}</td>
+                <td>{{ r.amount }}</td>
+                <td>{{ r.transportation }}</td>
+                <td>{{ r.other_expense }}</td>
+                <td>{{ r.paid }}</td>
+                <td>{{ r.total_expense }}</td>
+            </tr>
+            <tr class="fw-bold">
+                <td colspan="6">Total</td>
+                <td>{{ sum(accessories,'total_expense') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= ASSETS ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Asset Ledger</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportAssetsPDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportAssetsExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Asset</th>
+                <th>Company</th>
+                <th>Warranty</th>
+                <th>Expiry</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let r of assets">
+                <td>{{ r.purchase_date }}</td>
+                <td>{{ r.asset_name }}</td>
+                <td>{{ r.company_name }}</td>
+                <td>{{ r.warranty }}</td>
+                <td>{{ r.warranty_expiry || '-' }}</td>
+                <td>{{ r.asset_amount }}</td>
+            </tr>
+            <tr class="fw-bold">
+                <td colspan="5">Total</td>
+                <td>{{ sum(assets,'asset_amount') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= TEAM LEDGER ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Team Ledger</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportTeamLedgerPDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportTeamLedgerExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Team</th>
+                <th>Type</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of teamLedger">
+                <td>{{ r.entry_date }}</td>
+                <td>{{ r.team_name }}</td>
+                <td>{{ r.entry_type }}</td>
+                <td>{{ r.amount }}</td>
+            </tr>
+            <tr class="fw-bold">
+                <td colspan="3">Total</td>
+                <td>{{ sum(teamLedger,'amount') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= OTHER EXPENSE ================= -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Other Expense</h5>
+        <div>
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="exportOtherExpensePDF()">PDF</button>
+            <button class="btn btn-outline-success btn-sm" (click)="exportOtherExpenseExcel()">Excel</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of otherExpense">
+                <td>{{ r.expense_date }}</td>
+                <td>{{ r.expense_title }}</td>
+                <td>{{ r.amount }}</td>
+            </tr>
+            <tr class="fw-bold">
+                <td colspan="2">Total</td>
+                <td>{{ sum(otherExpense,'amount') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

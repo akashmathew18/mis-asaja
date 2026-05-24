@@ -1,0 +1,355 @@
+/* expense.component.css - Frosted Glass & Midnight Calm Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ================================================
+   GLOBAL & CONTAINER
+   ================================================ */
+:host {
+    display: block;
+    background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+    background-attachment: fixed;
+    position: relative;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+/* Subtle grain texture overlay */
+:host::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container-fluid {
+    position: relative;
+    z-index: 2;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===========================================
+   CARDS (Glassmorphism)
+   =========================================== */
+.card.shadow-sm {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(0px);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease-out;
+    margin-bottom: 1.5rem;
+}
+
+.card.shadow-sm:hover {
+    background: white;
+    box-shadow: 0 28px 38px -16px rgba(16, 55, 131, 0.18);
+    border-color: rgba(181, 198, 224, 0.6);
+}
+
+.card.shadow-sm.p-4 h4 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: linear-gradient(120deg, #1A2F4F, #1F4172);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: inline-block;
+}
+
+.card.shadow-sm.p-4 h4::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A4E77, #103783);
+    border-radius: 3px;
+}
+
+/* ===========================================
+   FORM LABELS & INPUTS
+   =========================================== */
+.form-label {
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2C4F6E;
+    margin-bottom: 0.3rem;
+}
+
+.form-control {
+    border: 1px solid rgba(65, 110, 160, 0.25);
+    border-radius: 1.5rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus {
+    border-color: #2A4E77;
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.15);
+    outline: none;
+    background-color: white;
+}
+
+/* ===========================================
+   DROPDOWN (Expense title) – HIGH Z-INDEX
+   =========================================== */
+.position-relative {
+    position: relative;
+}
+
+.expense-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    /* High value to overlap table and any other content */
+    max-height: 240px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid rgba(65, 110, 160, 0.2);
+    border-radius: 1rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    margin-top: 0.25rem;
+}
+
+.expense-item {
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1A2F4F;
+    transition: all 0.15s;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.expense-item:last-child {
+    border-bottom: none;
+}
+
+.expense-item:hover {
+    background: linear-gradient(135deg, #EFF3F8, #E6EDF4);
+    color: #103783;
+}
+
+.expense-empty {
+    padding: 0.8rem;
+    text-align: center;
+    color: #6c86a3;
+    font-size: 0.8rem;
+}
+
+/* Custom scroll for dropdown */
+.expense-dropdown::-webkit-scrollbar {
+    width: 5px;
+}
+
+.expense-dropdown::-webkit-scrollbar-track {
+    background: #eef2f6;
+    border-radius: 10px;
+}
+
+.expense-dropdown::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* ===========================================
+   BUTTONS (same as theme)
+   =========================================== */
+.btn-primary {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border: none;
+    border-radius: 3rem;
+    padding: 0.6rem 1.8rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0F3F7A, #0A1828);
+    box-shadow: 0 8px 16px rgba(16, 55, 131, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(65, 110, 160, 0.3);
+    color: #1C3F6E;
+    font-weight: 700;
+    border-radius: 3rem;
+    padding: 0.6rem 1.8rem;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: white;
+    transform: translateY(-1px);
+    border-color: #2A4E77;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.btn-warning,
+.btn-danger {
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.35rem 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+}
+
+.btn-warning {
+    background: white !important;
+    border: 1.5px solid #1F4172;
+    color: #1F4172;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #0A0F1A 0%, #1F4172 100%) !important;
+    border-color: transparent;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(31, 65, 114, 0.45);
+}
+
+.btn-danger {
+    background: white !important;
+    border: 1.5px solid #991B1B;
+    color: #991B1B;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #0A0F1A 0%, #991B1B 100%) !important;
+    border-color: transparent;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(153, 27, 27, 0.5);
+}
+
+/* ===========================================
+   TABLE (matches previous theme)
+   =========================================== */
+.table-responsive {
+    border-radius: 1.5rem;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.table {
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #1A2F4F, #0F2A4A);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 0.8rem;
+    border-bottom: none;
+    white-space: nowrap;
+}
+
+.table td {
+    padding: 0.9rem 0.8rem;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #162b3c;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: rgba(42, 78, 119, 0.04);
+}
+
+/* Action column buttons spacing */
+.table .d-flex.gap-2 {
+    gap: 0.5rem;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0 1rem;
+    }
+
+    .card.shadow-sm.p-4 {
+        padding: 1rem !important;
+    }
+
+    .form-control,
+    .btn {
+        font-size: 0.8rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .btn-warning,
+    .btn-danger {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.6rem;
+    }
+
+    .expense-dropdown {
+        max-height: 180px;
+    }
+}
+
+/* ===========================================
+   ELEGANT SCROLLBAR (global)
+   =========================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #eef2f6;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

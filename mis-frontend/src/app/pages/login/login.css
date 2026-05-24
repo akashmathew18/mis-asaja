@@ -1,0 +1,176 @@
+/* ================================================
+   LOGIN PAGE STYLES - FROSTED GLASS & MIDNIGHT CALM
+   Consistent with Professional MIS Theme
+   ================================================ */
+
+/* Login Wrapper - Fullscreen with Gradient Background */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Subtle grain texture overlay (same as landing page) */
+.login-wrapper::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Frosted Glass Card */
+.login-box {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  border-radius: 2rem;
+  padding: 2.2rem 2rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 38px -12px rgba(16, 55, 131, 0.2), 0 1px 2px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.25s ease-out;
+}
+
+/* Login Title with Brand Dot */
+.login-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: #1A2F4F;
+  margin-bottom: 1.8rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid rgba(44, 82, 112, 0.2);
+}
+
+/* Reuse brand-dot from landing page */
+.brand-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2A4E77, #103783);
+  box-shadow: 0 0 0 2px rgba(255, 255, 240, 0.5);
+}
+
+/* Custom Input Fields - Glassmorphic Style */
+.custom-input {
+  width: 100%;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.2rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(65, 110, 160, 0.25);
+  border-radius: 2rem;
+  color: #1E2F41;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #2C6E9E;
+  background: white;
+  box-shadow: 0 2px 8px rgba(28, 63, 110, 0.12);
+}
+
+.custom-input::placeholder {
+  color: #6C859E;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* Error Alert - Soft Danger Glass */
+.alert.alert-danger {
+  background: rgba(220, 80, 90, 0.12);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(200, 60, 70, 0.3);
+  border-radius: 2rem;
+  padding: 0.7rem 1.2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #A12A35;
+  text-align: center;
+}
+
+/* Login Button - Deep Navy Gradient (matching .btn-enter from landing) */
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.2px;
+  padding: 0.85rem 1.6rem;
+  border-radius: 3rem;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(100deg, #2C5270, #103A66);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16, 55, 131, 0.25);
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  margin-top: 0.5rem;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: linear-gradient(100deg, #1F486B, #0C2D53);
+  transform: scale(0.98);
+  box-shadow: 0 6px 16px rgba(12, 45, 83, 0.3);
+}
+
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Focus outline for accessibility */
+.login-btn:focus-visible,
+.custom-input:focus-visible {
+  outline: 2px solid #1F6E8C;
+  outline-offset: 2px;
+}
+
+/* Responsive Adjustments for Login Card */
+@media (max-width: 560px) {
+  .login-box {
+    padding: 1.6rem 1.4rem;
+    max-width: 94%;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .custom-input {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .login-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

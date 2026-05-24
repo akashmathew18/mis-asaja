@@ -1,0 +1,396 @@
+/* team-master.component.css - Frosted Glass & Midnight Calm Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ================================================
+   GLOBAL & CONTAINER (Matches Dashboard)
+   ================================================ */
+:host {
+    display: block;
+    background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+    background-attachment: fixed;
+    position: relative;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+/* Subtle grain texture overlay */
+:host::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container-fluid {
+    position: relative;
+    z-index: 2;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===========================================
+   PAGE TITLE & TEAM LEDGER BUTTON
+   =========================================== */
+h4 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: linear-gradient(120deg, #1A2F4F, #1F4172);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0;
+    display: inline-block;
+    position: relative;
+}
+
+h4::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A4E77, #103783);
+    border-radius: 3px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border: none;
+    border-radius: 3rem;
+    padding: 0.5rem 1.6rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    color: white;
+    box-shadow: 0 4px 8px rgba(16, 55, 131, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0F3F7A, #0A1828);
+    box-shadow: 0 8px 16px rgba(16, 55, 131, 0.3);
+}
+
+/* ===========================================
+   FORM CARD (Glassmorphism)
+   =========================================== */
+.team-card {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(0px);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease-out;
+    padding: 1.8rem;
+}
+
+.team-card:hover {
+    background: white;
+    box-shadow: 0 28px 38px -16px rgba(16, 55, 131, 0.18);
+    border-color: rgba(181, 198, 224, 0.6);
+}
+
+.form-label {
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2C4F6E;
+    margin-bottom: 0.3rem;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid rgba(65, 110, 160, 0.25);
+    border-radius: 1.5rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2A4E77;
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.15);
+    outline: none;
+    background-color: white;
+}
+
+/* Save/Update Button */
+.btn-save {
+    background: linear-gradient(135deg, #1E4A6B, #123552);
+    border: none;
+    border-radius: 3rem;
+    padding: 0.7rem 2rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(16, 55, 131, 0.2);
+    color: white;
+}
+
+.btn-save:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2A6083, #0F2A4A);
+    box-shadow: 0 10px 20px -6px rgba(16, 55, 131, 0.4);
+}
+
+.btn-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Cancel Button */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(65, 110, 160, 0.3);
+    color: #1C3F6E;
+    font-weight: 700;
+    border-radius: 3rem;
+    padding: 0.5rem 1.6rem;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: white;
+    transform: translateY(-1px);
+    border-color: #2A4E77;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Alert Message */
+.alert-info {
+    background: rgba(16, 55, 131, 0.08);
+    border-left: 4px solid #2A4E77;
+    border-radius: 1.5rem;
+    font-weight: 500;
+    color: #1F4172;
+}
+
+/* ===========================================
+   TABLE STYLES
+   =========================================== */
+.table-responsive {
+    border-radius: 2rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.table {
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    min-width: 500px;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #1A2F4F, #0F2A4A);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 0.8rem;
+    border-bottom: none;
+    white-space: nowrap;
+}
+
+.table td {
+    padding: 0.9rem 0.8rem;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #162b3c;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: rgba(42, 78, 119, 0.04);
+}
+
+/* Status Badge */
+.badge-status {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* For Active status */
+.badge-status:contains('Active') {
+    background: rgba(26, 127, 74, 0.12);
+    color: #1A7F4A;
+    border: 1px solid rgba(26, 127, 74, 0.3);
+}
+
+/* For Inactive status */
+.badge-status:contains('Inactive') {
+    background: rgba(153, 27, 27, 0.08);
+    color: #991B1B;
+    border: 1px solid rgba(153, 27, 27, 0.25);
+}
+
+/* Since :contains is not standard, we use attribute or class-based approach.
+   Better: use dynamic classes, but fallback with pattern matching using JS? 
+   We'll style by actual content using a data attribute approach if needed.
+   Alternatively, add classes .badge-active and .badge-inactive in component.
+   For now, we rely on common style for all badges. */
+.badge-status {
+    background: rgba(42, 78, 119, 0.1);
+    color: #2A4E77;
+    border: 1px solid rgba(42, 78, 119, 0.25);
+}
+
+/* Action Buttons in Table (Edit/Delete) - consistent with wood-expense */
+.table .btn-outline-primary,
+.table .btn-outline-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+    padding: 0.35rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    border-radius: 2rem;
+    transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    min-width: 70px;
+    background: white !important;
+    border: 1.5px solid;
+    box-shadow: none !important;
+}
+
+/* Edit button - Blue outline */
+.table .btn-outline-primary {
+    border-color: #1F4172 !important;
+    color: #1F4172 !important;
+}
+
+.table .btn-outline-primary:hover {
+    background: linear-gradient(135deg, #0A0F1A 0%, #1F4172 100%) !important;
+    border-color: transparent !important;
+    color: white !important;
+    font-weight: 800;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(31, 65, 114, 0.45) !important;
+}
+
+/* Delete button - Red outline */
+.table .btn-outline-danger {
+    border-color: #991B1B !important;
+    color: #991B1B !important;
+}
+
+.table .btn-outline-danger:hover {
+    background: linear-gradient(135deg, #0A0F1A 0%, #991B1B 100%) !important;
+    border-color: transparent !important;
+    color: white !important;
+    font-weight: 800;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(153, 27, 27, 0.5) !important;
+}
+
+/* Press state */
+.table .btn-outline-primary:active,
+.table .btn-outline-danger:active {
+    transform: translateY(1px);
+    box-shadow: none !important;
+}
+
+/* Empty state row */
+.text-muted {
+    color: #6C859E !important;
+    font-size: 0.9rem;
+}
+
+/* ===========================================
+   RESPONSIVE ADJUSTMENTS
+   =========================================== */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0 1rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    .team-card {
+        padding: 1rem !important;
+    }
+
+    .form-control,
+    .form-select,
+    .btn {
+        font-size: 0.8rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .table .btn-outline-primary,
+    .table .btn-outline-danger {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.6rem;
+        min-width: 58px;
+    }
+
+    .btn-save,
+    .btn-secondary {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .d-flex.gap-2 {
+        gap: 0.5rem;
+    }
+}
+
+/* ===========================================
+   ELEGANT SCROLLBAR
+   =========================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #eef2f6;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

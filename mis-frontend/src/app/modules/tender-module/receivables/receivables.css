@@ -1,0 +1,169 @@
+/* receivables.css */
+
+.container-fluid {
+
+    min-height: 100vh;
+
+    background: #f5f7fb;
+
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+/* =====================================================
+HEADER
+===================================================== */
+
+.page-title {
+
+    font-size: 2.2rem;
+
+    font-weight: 700;
+
+    color: #082b61;
+}
+
+/* =====================================================
+TABLE
+===================================================== */
+
+.receivable-table {
+
+    background: white;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.table {
+
+    margin-bottom: 0;
+}
+
+.table thead {
+
+    background: #f1f4f9;
+}
+
+.table thead th {
+
+    color: #082b61;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    vertical-align: middle;
+}
+
+.table tbody td {
+
+    font-size: 15px;
+
+    vertical-align: middle;
+}
+
+/* =====================================================
+STATUS
+===================================================== */
+
+.status-pill {
+
+    background: linear-gradient(90deg,
+            #0d6efd,
+            #001d3d);
+
+    color: white;
+
+    padding: 5px 12px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    display: inline-block;
+}
+
+/* =====================================================
+BUTTON
+===================================================== */
+
+.btn-open {
+
+    border: 1px solid #0d6efd;
+
+    background: white;
+
+    color: #0d6efd;
+
+    border-radius: 999px;
+
+    padding: 6px 18px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.btn-open:hover {
+
+    background: #0d6efd;
+
+    color: white;
+}
+
+/* =====================================================
+PENDING
+===================================================== */
+
+.pending-cell {
+
+    color: #ff3b30;
+
+    font-weight: 700;
+}
+
+/* =====================================================
+ROW COLORS
+===================================================== */
+
+.row-danger {
+
+    background: #f8d7da;
+}
+
+.row-warning {
+
+    background: #fff3cd;
+}
+
+.row-clear {
+
+    background: #f8f9fa;
+}
+
+.row-closed {
+
+    background: #e2f0d9;
+}
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media(max-width: 992px) {
+
+    .table {
+
+        min-width: 1200px;
+    }
+
+}

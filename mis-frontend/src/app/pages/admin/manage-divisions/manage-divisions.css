@@ -1,0 +1,501 @@
+/* ================================================
+   MANAGE ORGANIZATIONS - FROSTED GLASS THEME
+   ================================================ */
+
+.container {
+    max-width: 1350px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ================= TITLE ================= */
+
+h3.text-center {
+
+    font-size: 1.9rem;
+
+    font-weight: 700;
+
+    background: linear-gradient(135deg,
+            #1A2F4F,
+            #325D88);
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+    margin-bottom: 2rem !important;
+
+    position: relative;
+}
+
+h3.text-center::after {
+
+    content: '';
+
+    position: absolute;
+
+    bottom: -10px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 75px;
+
+    height: 3px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(90deg,
+            #2A4E77,
+            #7BA4D1);
+}
+
+/* ================= CARD ================= */
+
+.card {
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border-radius: 2rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 20px 35px -12px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.03);
+
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 25px 40px -15px rgba(25, 50, 90, 0.12);
+}
+
+.card.p-4 {
+    padding: 2rem !important;
+}
+
+/* ================= LABEL ================= */
+
+label {
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    color: #2B4C6B;
+
+    margin-bottom: 0.55rem;
+
+    display: block;
+}
+
+/* ================= INPUT ================= */
+
+.form-control {
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid #d9e5f0;
+
+    border-radius: 1.25rem;
+
+    padding: 0.85rem 1.2rem;
+
+    font-size: 0.92rem;
+
+    color: #1f2937;
+
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+
+    border-color: #2A4E77;
+
+    box-shadow:
+        0 0 0 4px rgba(42, 78, 119, 0.15);
+
+    outline: none;
+
+    background: white;
+}
+
+
+
+/* ================= ACTION ROW ================= */
+
+.action-row {
+
+    display: flex;
+
+    gap: 1rem;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+/* ================= SAVE BUTTON ================= */
+
+.btn-save {
+
+    background: linear-gradient(120deg,
+            #1F4172,
+            #2A4E77);
+
+    border: none;
+
+    color: white;
+
+    padding: 0.8rem 1.8rem;
+
+    border-radius: 2rem;
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+
+    box-shadow:
+        0 8px 18px rgba(31, 65, 114, 0.2);
+}
+
+.btn-save:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 22px rgba(31, 65, 114, 0.3);
+}
+
+/* ================= CANCEL ================= */
+
+.btn-cancel {
+
+    background: rgba(255, 255, 255, 0.95);
+
+    border: 1.5px solid #d8dee7;
+
+    color: #516274;
+
+    padding: 0.8rem 1.5rem;
+
+    border-radius: 2rem;
+
+    font-size: 0.84rem;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+
+    background: #fff4f4;
+
+    border-color: #d6b4b4;
+
+    color: #b91c1c;
+}
+
+/* ================= TABLE ================= */
+
+.table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+}
+
+.table thead th {
+
+    background: linear-gradient(120deg,
+            #1B2E40,
+            #142433);
+
+    color: white;
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    padding: 1rem;
+}
+
+.table tbody td {
+
+    background: rgba(255, 255, 255, 0.78);
+
+    padding: 1rem;
+
+    font-size: 0.86rem;
+
+    font-weight: 500;
+
+    color: #1f3a4b;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    transition: background 0.2s ease;
+}
+
+.table tbody tr:hover td {
+
+    background: rgba(255, 249, 240, 0.95);
+}
+
+/* ================= STATUS ================= */
+
+.status-cell {
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.table .btn-sm {
+
+    min-width: 85px;
+
+    border-radius: 2rem;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    padding: 0.45rem 1rem;
+
+    transition: all 0.2s ease;
+}
+
+/* EDIT */
+
+.table .btn-primary {
+
+    background: white;
+
+    border: 1.5px solid #2A4E77;
+
+    color: #1F4172;
+}
+
+.table .btn-primary:hover {
+
+    background: #2A4E77;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+/* DEACTIVATE */
+
+.table .btn-danger {
+
+    background: linear-gradient(120deg,
+            #dc2626,
+            #991b1b);
+
+    border: none;
+
+    color: white;
+}
+
+/* ACTIVATE */
+
+.table .btn-success {
+
+    background: linear-gradient(120deg,
+            #10b981,
+            #059669);
+
+    border: none;
+
+    color: white;
+}
+
+.table .btn-success:hover,
+.table .btn-danger:hover {
+
+    transform: translateY(-2px);
+}
+
+/* ================= TABLE WRAPPER ================= */
+
+.table-responsive {
+
+    border-radius: 1.5rem;
+
+    overflow: auto;
+
+    box-shadow:
+        0 12px 25px -10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ================= STATUS BADGES ================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 95px;
+
+    padding: 0.45rem 1rem;
+
+    border-radius: 2rem;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+
+    border: 1px solid transparent;
+
+    backdrop-filter: blur(6px);
+
+    transition: all 0.2s ease;
+}
+
+/* ACTIVE */
+
+.status-active {
+
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.18),
+            rgba(5, 150, 105, 0.28));
+
+    color: #047857;
+
+    border-color: rgba(5, 150, 105, 0.25);
+
+    box-shadow:
+        0 4px 10px rgba(16, 185, 129, 0.12);
+}
+
+/* INACTIVE */
+
+.status-inactive {
+
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.16),
+            rgba(185, 28, 28, 0.24));
+
+    color: #b91c1c;
+
+    border-color: rgba(185, 28, 28, 0.2);
+
+    box-shadow:
+        0 4px 10px rgba(239, 68, 68, 0.12);
+}
+
+/* ================= DASHBOARD BUTTON ================= */
+
+.btn-dashboard {
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1.5px solid #cfdceb;
+
+    color: #1F4172;
+
+    border-radius: 2.5rem;
+
+    padding: 0.7rem 1.6rem;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    transition: all 0.22s ease;
+
+    backdrop-filter: blur(6px);
+
+    box-shadow:
+        0 6px 14px rgba(15, 23, 42, 0.06);
+}
+
+.btn-dashboard:hover {
+
+    background: linear-gradient(120deg,
+            #1F4172,
+            #2A4E77);
+
+    color: white;
+
+    border-color: #1F4172;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(31, 65, 114, 0.25);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .card.p-4 {
+        padding: 1.2rem !important;
+    }
+
+    .action-row {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .btn-save,
+    .btn-cancel {
+
+        width: 100%;
+    }
+
+    .table thead th,
+    .table tbody td {
+
+        font-size: 0.72rem;
+
+        padding: 0.7rem 0.5rem;
+    }
+
+    .table .btn-sm {
+
+        min-width: 70px;
+
+        font-size: 0.65rem;
+    }
+
+}

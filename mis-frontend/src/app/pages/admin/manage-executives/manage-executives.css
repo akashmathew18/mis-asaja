@@ -1,0 +1,514 @@
+/* ================================================
+   MANAGE EXECUTIVES - FROSTED GLASS & MIDNIGHT CALM
+   Because apparently every CRUD page now needs
+   luxury hotel aesthetics.
+   ================================================ */
+
+/* ================= CONTAINER ================= */
+
+.container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ================= CARD ================= */
+
+.card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(2px);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+        0 20px 35px -12px rgba(0, 0, 0, 0.08),
+        0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow:
+        0 24px 42px -16px rgba(16, 55, 131, 0.15);
+
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.card.p-4 {
+    padding: 2rem !important;
+}
+
+/* ================= PAGE TITLE ================= */
+
+h3.text-center {
+    font-size: 1.85rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, #1A2F4F, #1F4172);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    margin-bottom: 2rem !important;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+h3.text-center::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A4E77, #6C9BCF);
+    border-radius: 3px;
+}
+
+/* ================= FORM CONTROLS ================= */
+
+.form-control,
+select.form-control {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e2edf7;
+    border-radius: 1.25rem;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1a2f3e;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.form-control:focus,
+select.form-control:focus {
+    border-color: #2A4E77;
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.2);
+    outline: none;
+    background: white;
+}
+
+/* ================= LABEL ================= */
+
+label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    color: #2c4b6e;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+label strong {
+    font-weight: 700;
+    color: #10355e;
+    font-size: 0.85rem;
+}
+
+/* ================= EXEC ID ================= */
+
+.exec-id-box {
+    color: #1f4172;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+/* ================= FIRM GRID ================= */
+
+.firm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.8rem 1.5rem;
+
+    background: rgba(248, 250, 252, 0.7);
+
+    padding: 1rem 1.2rem;
+
+    border-radius: 1.5rem;
+
+    border: 1px solid #eef2f8;
+
+    max-height: 220px;
+
+    overflow-y: auto;
+
+    margin-top: 0.25rem;
+}
+
+.firm-grid div {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1f3a4b;
+}
+
+.firm-grid input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: #2A4E77;
+    cursor: pointer;
+}
+
+/* ================= SCROLLBAR ================= */
+
+.firm-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.firm-grid::-webkit-scrollbar-track {
+    background: #dfe8f0;
+    border-radius: 10px;
+}
+
+.firm-grid::-webkit-scrollbar-thumb {
+    background: #2A4E77;
+    border-radius: 10px;
+}
+
+/* ================= BUTTONS ================= */
+
+.mt-3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 1.5rem;
+}
+
+.btn-success {
+    background: linear-gradient(105deg, #2C5270, #103A66);
+    border: none;
+    border-radius: 2.5rem;
+    padding: 0.7rem 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    color: white;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(16, 55, 131, 0.2);
+    min-width: 160px;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(105deg, #1F486B, #0C2D53);
+    box-shadow: 0 8px 18px rgba(12, 45, 83, 0.25);
+}
+
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid #ccdbe9;
+    border-radius: 2.5rem;
+    padding: 0.7rem 1.8rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4a627a;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    background: #fff0ed;
+    border-color: #c0a090;
+    color: #b91c1c;
+    transform: translateY(-1px);
+}
+
+/* ================= TABLE ================= */
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: linear-gradient(115deg, #1e2f40, #152838);
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border-bottom: none;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 1rem 0.9rem;
+    vertical-align: middle;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1f3a4b;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: background 0.2s;
+}
+
+.table tbody tr:hover td {
+    background-color: rgba(255, 250, 240, 0.9);
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.table th:last-child,
+.table td:last-child {
+    text-align: center;
+    width: 220px;
+    min-width: 200px;
+}
+
+.d-flex.gap-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.table .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 2rem;
+    transition: all 0.2s ease;
+    min-width: 85px;
+    border: none;
+    letter-spacing: 0.3px;
+}
+
+/* EDIT */
+
+.table .btn-primary {
+    background: white;
+    border: 1.5px solid #2A4E77;
+    color: #1F4172;
+}
+
+.table .btn-primary:hover {
+    background: #2A4E77;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* DEACTIVATE */
+
+.table .btn-danger {
+    background: linear-gradient(105deg, #dc2626, #991b1b);
+    color: white;
+}
+
+.table .btn-danger:hover {
+    background: linear-gradient(105deg, #b91c1c, #7f1d1d);
+    transform: translateY(-2px);
+}
+
+/* ACTIVATE */
+
+.table .btn-success {
+    background: linear-gradient(105deg, #10b981, #059669);
+    color: white;
+}
+
+.table .btn-success:hover {
+    background: linear-gradient(105deg, #059669, #047857);
+    transform: translateY(-2px);
+}
+
+/* ================= STATUS COLUMN ================= */
+
+/* ============================================
+   STATUS BADGES
+   ============================================ */
+
+.status-badge {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 95px;
+
+    padding: 0.45rem 0.9rem;
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+
+    border: 1px solid transparent;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.06);
+
+    backdrop-filter: blur(6px);
+}
+
+/* ACTIVE */
+
+.status-active {
+
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.18),
+            rgba(5, 150, 105, 0.18));
+
+    color: #065f46;
+
+    border-color: rgba(16, 185, 129, 0.25);
+}
+
+/* INACTIVE */
+
+.status-inactive {
+
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.18),
+            rgba(220, 38, 38, 0.18));
+
+    color: #991b1b;
+
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+
+.table-responsive {
+    border-radius: 1.5rem;
+    overflow: auto;
+    box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= STICKY HEADER ================= */
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .card.p-4 {
+        padding: 1.25rem !important;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .col-md-4,
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .firm-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .mt-3 {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-success,
+    .btn-cancel {
+        width: 100%;
+    }
+
+    .table .btn-sm {
+        min-width: 70px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    h3.text-center {
+        font-size: 1.5rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .table .btn-sm {
+        min-width: 60px;
+        padding: 0.25rem 0.4rem;
+        font-size: 0.6rem;
+    }
+}
+
+/* ================= ACCESSIBILITY ================= */
+
+.btn:focus-visible,
+.form-control:focus-visible,
+.firm-grid input:focus-visible {
+    outline: 2px solid #2A4E77;
+    outline-offset: 2px;
+}
+
+/* ================= DASHBOARD BUTTON ================= */
+
+.btn-dashboard {
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1.5px solid #cfdceb;
+
+    color: #1F4172;
+
+    border-radius: 2.5rem;
+
+    padding: 0.7rem 1.6rem;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    transition: all 0.22s ease;
+
+    backdrop-filter: blur(6px);
+
+    box-shadow:
+        0 6px 14px rgba(15, 23, 42, 0.06);
+}
+
+.btn-dashboard:hover {
+
+    background: linear-gradient(120deg,
+            #1F4172,
+            #2A4E77);
+
+    color: white;
+
+    border-color: #1F4172;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(31, 65, 114, 0.25);
+}

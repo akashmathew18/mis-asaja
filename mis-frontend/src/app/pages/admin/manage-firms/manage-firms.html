@@ -1,0 +1,186 @@
+<div class="container mt-4">
+
+    <h3 class="text-center mb-4">Manage Firms</h3>
+
+    <!-- ================= HEADER ACTIONS ================= -->
+
+    <div class="d-flex justify-content-end mb-4">
+
+        <button class="btn btn-dashboard" (click)="backToDashboard()">
+
+            Back to Dashboard
+
+        </button>
+
+    </div>
+
+    <!-- ================= FORM CARD ================= -->
+
+    <div class="card p-4 mb-4">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <input class="form-control" placeholder="Firm Name" [(ngModel)]="form.firm_name">
+            </div>
+
+            <div class="col-md-2">
+                <input class="form-control" placeholder="Short Name (PTL)" [(ngModel)]="form.short_name">
+            </div>
+
+            <div class="col-md-3">
+
+                <select class="form-control" [(ngModel)]="form.module">
+
+                    <option value="">
+                        Select Module
+                    </option>
+
+                    <option value="pmu">
+                        PMU
+                    </option>
+
+                    <option value="tender-module">
+                        Tender Module
+                    </option>
+
+                    <option value="ha">
+                        HA
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-2">
+                <input class="form-control" placeholder="Contact Number" [(ngModel)]="form.contact_number">
+            </div>
+
+
+
+        </div>
+
+        <!-- ================= ADDRESS ================= -->
+
+        <div class="row mt-3">
+
+            <div class="col-md-12">
+
+                <textarea class="form-control address-box" placeholder="Address" [(ngModel)]="form.address">
+
+                </textarea>
+
+            </div>
+
+        </div>
+
+        <div class="mt-3">
+            <button class="btn btn-success" (click)="save()">
+                {{ editing ? 'Update Firm' : 'Create Firm' }}</button>
+
+            <button *ngIf="editing" class="btn btn-cancel" (click)="reset()"> Cancel Edit</button>
+        </div>
+
+    </div>
+
+    <!-- ================= TABLE CARD ================= -->
+
+    <div class="card p-4">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered text-center">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Firm Code</th>
+                        <th>Name</th>
+                        <th>Short</th>
+                        <th>Module</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let f of firms">
+
+                        <td>{{ f.firm_code }}</td>
+
+                        <td>{{ f.firm_name }}</td>
+
+                        <td>{{ f.short_name }}</td>
+
+                        <td>
+
+                            <span class="module-badge" [ngClass]="{
+            'module-pmu': f.module === 'pmu',
+            'module-tender': f.module === 'tender-module',
+            'module-ha': f.module === 'ha'
+        }">
+
+                                {{ f.module }}
+
+                            </span>
+
+                        </td>
+
+                        <td>{{ f.contact_number || '—' }}</td>
+
+
+
+                        <td>
+
+                            <span class="status-badge" [ngClass]="f.status === 'active'
+            ? 'status-active'
+            : 'status-inactive'">
+
+                                {{ f.status }}
+
+                            </span>
+
+                        </td>
+
+                        <td class="d-flex gap-2">
+
+                            <!-- EDIT -->
+
+                            <button class="btn btn-sm btn-primary" (click)="edit(f)">
+
+                                Edit
+
+                            </button>
+
+                            <!-- STATUS -->
+
+                            <button class="btn btn-sm" [ngClass]="f.status === 'active'
+                                    ? 'btn-danger'
+                                    : 'btn-success'" (click)="toggleStatus(f)">
+
+                                {{ f.status === 'active'
+                                ? 'Deactivate'
+                                : 'Activate' }}
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<app-dialog></app-dialog>

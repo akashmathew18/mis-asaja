@@ -1,0 +1,108 @@
+<div class="container dashboard-container">
+    <!-- Header row: title + date filter buttons -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 col-12">
+            <h3 class="dashboard-title">Proxima Manufacturing Unit - Dashboard</h3>
+        </div>
+        <div class="col-md-6 col-12 mt-2 mt-md-0">
+            <div class="filter-group">
+                <button type="button" class="btn-filter" [class.active]="activeDays === 7" (click)="setDateFilter(7)"
+                    [disabled]="isLoading">
+                    Last 7 Days
+                </button>
+                <button type="button" class="btn-filter" [class.active]="activeDays === 30" (click)="setDateFilter(30)"
+                    [disabled]="isLoading">
+                    Last 30 Days
+                </button>
+                <button type="button" class="btn-filter" [class.active]="activeDays === 90" (click)="setDateFilter(90)"
+                    [disabled]="isLoading">
+                    Last 90 Days
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary cards (exactly 4 as shown in reference) -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3 col-sm-6">
+            <div class="summary-card card-wood">
+                <h6>Total Wood</h6>
+                <h4>{{ formatAmount(totalWoodExpense) }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="summary-card card-plywood">
+                <h6>Plywood</h6>
+                <h4>{{ formatAmount(totalPlywoodPurchase) }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="summary-card card-accessories">
+                <h6>Accessories</h6>
+                <h4>{{ formatAmount(totalAccessories) }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="summary-card card-other-expense">
+                <h6>Other Expenses</h6>
+                <h4>{{ formatAmount(totalOtherExpenses) }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Module / navigation cards -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-4 col-sm-6" (click)="goTo('wood-expense')">
+            <div class="module-card">
+                <h5>Wood Expense</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('plywood-purchase')">
+            <div class="module-card">
+                <h5>Plywood Purchase</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('accessories')">
+            <div class="module-card">
+                <h5>Accessories</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('labour')">
+            <div class="module-card">
+                <h5>Labour Cost</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('payments')">
+            <div class="module-card">
+                <h5>Payments</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('team-ledger')">
+            <div class="module-card">
+                <h5>Team Ledger</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('cot-delivery')">
+            <div class="module-card">
+                <h5>COT DELIVERY</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('asset-ledger')">
+            <div class="module-card">
+                <h5>Asset Ledger</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6" (click)="goTo('other-expense')">
+            <div class="module-card">
+                <h5>Other Expenses</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple loading overlay (optional) -->
+    <div *ngIf="isLoading" class="loading-overlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>

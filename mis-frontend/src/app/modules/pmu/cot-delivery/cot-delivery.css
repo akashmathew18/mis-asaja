@@ -1,0 +1,559 @@
+/* wood-expense.component.css - Frosted Glass & Midnight Calm Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ================================================
+   GLOBAL & CONTAINER (Matches Dashboard)
+   ================================================ */
+:host {
+    display: block;
+    background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+    background-attachment: fixed;
+    position: relative;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+/* Subtle grain texture overlay */
+:host::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===========================================
+   PAGE TITLE & GRAND TOTAL CARD
+   =========================================== */
+h4 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: linear-gradient(120deg, #1A2F4F, #1F4172);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0 0 0.5rem 0;
+    position: relative;
+    display: inline-block;
+}
+
+h4::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A4E77, #103783);
+    border-radius: 3px;
+}
+
+.bg-success.text-white {
+    background: linear-gradient(135deg, #1E4A6B, #123552) !important;
+    border: none;
+    border-radius: 2rem;
+    box-shadow: 0 8px 16px -8px rgba(16, 55, 131, 0.3);
+    padding: 0.8rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.2px;
+}
+
+
+/* ===========================================
+   PROFESSIONAL SUMMARY CARD (COT Delivery)
+   =========================================== */
+.card.shadow-sm.border-0.px-3.py-2.text-end {
+    /* Override Bootstrap defaults */
+    background: linear-gradient(135deg, #1A2F4F 0%, #0F2A4A 100%);
+    border: none;
+    border-radius: 2rem;
+    box-shadow: 0 12px 24px -12px rgba(16, 55, 131, 0.4);
+    padding: 1rem 1.8rem !important;
+    /* More spacious */
+    min-width: 220px;
+    /* Consistent width */
+    transition: all 0.25s ease-out;
+}
+
+/* Hover effect – subtle lift */
+.card.shadow-sm.border-0.px-3.py-2.text-end:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 30px -12px rgba(16, 55, 131, 0.5);
+    background: linear-gradient(135deg, #1F4172 0%, #0A1828 100%);
+}
+
+/* Inner text blocks – each stat line */
+.card.shadow-sm.border-0.px-3.py-2.text-end>div {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    letter-spacing: -0.2px;
+    color: #ffffff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Last child (Profit/Loss) – no bottom margin */
+.card.shadow-sm.border-0.px-3.py-2.text-end>div:last-child {
+    margin-bottom: 0;
+}
+
+/* Strong labels inside the card */
+.card.shadow-sm.border-0.px-3.py-2.text-end strong {
+    font-weight: 800;
+    color: #E2E8F0;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+/* Amount values – larger, bolder */
+.card.shadow-sm.border-0.px-3.py-2.text-end div:first-child strong+span,
+.card.shadow-sm.border-0.px-3.py-2.text-end div:nth-child(2) strong+span,
+.card.shadow-sm.border-0.px-3.py-2.text-end div:last-child strong+span {
+    font-size: 1.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #F8FAFC, #E2E8F0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: none;
+}
+
+/* Profit/Loss special treatment */
+.card.shadow-sm.border-0.px-3.py-2.text-end div:last-child {
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 0.2rem;
+}
+
+/* Profit (green) and Loss (red) colours – vibrant on dark background */
+.card.shadow-sm.border-0.px-3.py-2.text-end .text-success {
+    color: #4ADE80 !important;
+    font-weight: 800;
+}
+
+.card.shadow-sm.border-0.px-3.py-2.text-end .text-danger {
+    color: #F87171 !important;
+    font-weight: 800;
+}
+
+/* Optional: add a subtle currency icon before each amount (requires FontAwesome or similar) */
+/* Uncomment if you have FA icons in your project */
+/*
+.card.shadow-sm.border-0.px-3.py-2.text-end div::before {
+    font-family: 'Font Awesome 6 Free';
+    content: '\f155';
+    font-weight: 900;
+    margin-right: 6px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+*/
+
+/* ===========================================
+   RESPONSIVE TWEAKS
+   =========================================== */
+@media (max-width: 768px) {
+    .card.shadow-sm.border-0.px-3.py-2.text-end {
+        padding: 0.7rem 1rem !important;
+        min-width: 180px;
+    }
+
+    .card.shadow-sm.border-0.px-3.py-2.text-end>div {
+        font-size: 0.8rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .card.shadow-sm.border-0.px-3.py-2.text-end div:first-child strong+span,
+    .card.shadow-sm.border-0.px-3.py-2.text-end div:nth-child(2) strong+span,
+    .card.shadow-sm.border-0.px-3.py-2.text-end div:last-child strong+span {
+        font-size: 1rem;
+    }
+}
+
+/* ===========================================
+   FORM & FILTER CARDS (Glassmorphism)
+   =========================================== */
+.card.p-3 {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(0px);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease-out;
+    margin-bottom: 1.5rem;
+}
+
+.card.p-3:hover {
+    background: white;
+    box-shadow: 0 28px 38px -16px rgba(16, 55, 131, 0.18);
+    border-color: rgba(181, 198, 224, 0.6);
+}
+
+/* Form labels */
+label {
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2C4F6E;
+    margin-bottom: 0.3rem;
+}
+
+/* Inputs & selects — refined rounded corners, focus glow */
+.form-control,
+.form-select {
+    border: 1px solid rgba(65, 110, 160, 0.25);
+    border-radius: 1.5rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2A4E77;
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.15);
+    outline: none;
+    background-color: white;
+}
+
+/* Readonly total input */
+input[readonly] {
+    background-color: #EFF3F8;
+    font-weight: 700;
+    color: #103783;
+    border-color: rgba(65, 110, 160, 0.3);
+}
+
+/* ===========================================
+   PRIMARY ACTION BUTTON (Save / Update)
+   =========================================== */
+.btn-success {
+    background: linear-gradient(135deg, #1E4A6B, #123552);
+    border: none;
+    border-radius: 3rem;
+    padding: 0.7rem 2rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(16, 55, 131, 0.2);
+    color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2A6083, #0F2A4A);
+    box-shadow: 0 10px 20px -6px rgba(16, 55, 131, 0.4);
+}
+
+.btn-success:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Alert message */
+.alert-success {
+    background: rgba(16, 55, 131, 0.08);
+    border-left: 4px solid #2A4E77;
+    border-radius: 1.5rem;
+    font-weight: 500;
+    color: #1F4172;
+}
+
+/* ===========================================
+   FILTER BUTTONS (Primary & Secondary)
+   =========================================== */
+.btn-primary {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border: none;
+    border-radius: 3rem;
+    padding: 0.5rem 1.6rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0F3F7A, #0A1828);
+    box-shadow: 0 8px 16px rgba(16, 55, 131, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(65, 110, 160, 0.3);
+    color: #1C3F6E;
+    font-weight: 700;
+    border-radius: 3rem;
+    padding: 0.5rem 1.6rem;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: white;
+    transform: translateY(-1px);
+    border-color: #2A4E77;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ===========================================
+   TABLE — Premium, Responsive, Sticky Actions
+   =========================================== */
+.table-responsive {
+    border-radius: 2rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.table {
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: max-content;
+    min-width: 100%;
+}
+
+/* Header */
+.table thead th {
+    background: linear-gradient(135deg, #1A2F4F, #0F2A4A);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 0.8rem;
+    border-bottom: none;
+    white-space: nowrap;
+}
+
+/* Body cells */
+.table td {
+    padding: 0.9rem 0.8rem;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #162b3c;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: transparent;
+}
+
+/* Row hover */
+.table tbody tr:hover {
+    background: rgba(42, 78, 119, 0.04);
+}
+
+/* Sticky Action Column (last column) */
+.table th:last-child,
+.table td:last-child {
+    position: sticky;
+    right: 0;
+    background: inherit;
+    z-index: 5;
+    box-shadow: -2px 0 5px -2px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th:last-child {
+    background: linear-gradient(135deg, #1A2F4F, #0F2A4A);
+    z-index: 10;
+}
+
+.table tbody td:last-child {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+/* FIXED — solid background so sticky column never bleeds */
+.table tbody tr:hover td:last-child {
+    background-color: #EEF2F8;
+}
+
+/* Footer */
+tfoot.table-light th {
+    background-color: #F1F5F9;
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-top: 2px solid #e2e8f0;
+    padding: 0.9rem 0.8rem;
+    color: #0F2A4A;
+}
+
+/* ===========================================
+   ACTION BUTTONS (Edit & Delete)
+   Default: white background + colored border
+   Hover: dark gradient (black + theme color), white bold text, border removed
+   =========================================== */
+/* ===========================================
+   ACTION BUTTONS (Edit & Delete)
+   =========================================== */
+td .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+    padding: 0.35rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    border-radius: 2rem;
+    transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    min-width: 70px;
+    background: white !important;
+    /* ← beats Bootstrap default */
+    border: 1.5px solid;
+    box-shadow: none !important;
+}
+
+/* EDIT — Blue outline at rest */
+td .btn-warning {
+    border-color: #1F4172 !important;
+    color: #1F4172 !important;
+}
+
+td .btn-warning:hover {
+    background: linear-gradient(135deg, #0A0F1A 0%, #1F4172 100%) !important;
+    border-color: transparent !important;
+    color: white !important;
+    font-weight: 800;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(31, 65, 114, 0.45) !important;
+}
+
+/* DELETE — Red outline at rest */
+td .btn-danger {
+    border-color: #991B1B !important;
+    color: #991B1B !important;
+}
+
+td .btn-danger:hover {
+    background: linear-gradient(135deg, #0A0F1A 0%, #991B1B 100%) !important;
+    border-color: transparent !important;
+    color: white !important;
+    font-weight: 800;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(153, 27, 27, 0.5) !important;
+}
+
+/* Press state */
+td .btn-warning:active,
+td .btn-danger:active {
+    transform: translateY(1px);
+    box-shadow: none !important;
+}
+
+/* ===========================================
+   PAGINATION
+   =========================================== */
+.btn-group .btn-outline-primary {
+    border-radius: 2rem;
+    border: 1px solid rgba(65, 110, 160, 0.4);
+    background: rgba(255, 255, 255, 0.7);
+    color: #1C3F6E;
+    font-weight: 700;
+    padding: 0.3rem 1.2rem;
+    transition: all 0.2s;
+}
+
+.btn-group .btn-outline-primary:hover {
+    background: #2A4E77;
+    border-color: #2A4E77;
+    color: white;
+}
+
+.btn-group .btn-primary {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border-radius: 2rem;
+    padding: 0.3rem 1.2rem;
+    pointer-events: none;
+    color: white;
+}
+
+/* ===========================================
+   RESPONSIVE ADJUSTMENTS
+   =========================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    .card.p-3 {
+        padding: 1rem !important;
+    }
+
+    .form-control,
+    .form-select,
+    .btn {
+        font-size: 0.8rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    td .btn {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.6rem;
+        min-width: 58px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.4rem 1rem;
+    }
+}
+
+/* ===========================================
+   ELEGANT SCROLLBAR (Matches main theme)
+   =========================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #eef2f6;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

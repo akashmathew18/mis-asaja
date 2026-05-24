@@ -1,0 +1,183 @@
+/* expense-ledger.css */
+
+.container-fluid {
+
+    min-height: 100vh;
+
+    background: #f5f7fb;
+
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+/* =====================================================
+HEADER
+===================================================== */
+
+.page-title {
+
+    font-size: 2.2rem;
+
+    font-weight: 700;
+
+    color: #082b61;
+}
+
+.total-card {
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 14px 20px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.08);
+}
+
+.total-amount {
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: #ff3b30;
+}
+
+/* =====================================================
+CARD
+===================================================== */
+
+.ledger-card {
+
+    background: white;
+
+    border-radius: 22px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.08);
+
+    height: 100%;
+}
+
+.tender-id {
+
+    color: #082b61;
+
+    font-size: 1.7rem;
+
+    font-weight: 700;
+}
+
+.project-name {
+
+    color: #0057c2;
+
+    font-weight: 700;
+
+    font-size: 1.1rem;
+}
+
+.exec-name {
+
+    color: #777;
+
+    margin-top: 2px;
+}
+
+.expense-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.expense-pill {
+
+    background: #2f3e46;
+
+    color: white;
+
+    padding: 3px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.expense-amount {
+
+    color: #ff3b30;
+
+    font-weight: 700;
+}
+
+.total-label {
+
+    font-size: 1.4rem;
+
+    color: #082b61;
+}
+
+.total-red {
+
+    font-size: 1.5rem;
+
+    color: #ff3b30;
+}
+
+/* =====================================================
+DIALOG
+===================================================== */
+
+.dialog-backdrop {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.35);
+
+    z-index: 999;
+}
+
+.expense-dialog {
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 500px;
+    max-width: 95%;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    z-index: 1000;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.25);
+}
+
+.dialog-title {
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+}

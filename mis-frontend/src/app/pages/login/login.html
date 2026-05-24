@@ -1,0 +1,26 @@
+<div class="login-wrapper">
+  <div class="login-box">
+    <h2 class="login-title">
+      <span class="brand-dot"></span> <!-- matches your landing page style -->
+      MIS Login
+    </h2>
+
+    <!-- ERROR MESSAGE -->
+    <div *ngIf="errorMessage" class="alert alert-danger py-2">
+      {{ errorMessage }}
+    </div>
+
+    <!-- USERNAME FIELD -->
+    <input type="text" class="form-control custom-input" placeholder="Username" [(ngModel)]="username"
+      (keyup.enter)="login()" />
+
+    <!-- PASSWORD FIELD -->
+    <input type="password" class="form-control custom-input" placeholder="Password" [(ngModel)]="password"
+      (keyup.enter)="login()" />
+
+    <!-- LOGIN BUTTON -->
+    <button class="btn login-btn" [disabled]="loading" (click)="login()">
+      {{ loading ? 'Logging...' : 'Login' }}
+    </button>
+  </div>
+</div>

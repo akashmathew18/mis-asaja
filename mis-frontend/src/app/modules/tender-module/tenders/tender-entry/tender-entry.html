@@ -1,0 +1,471 @@
+<div class="container mt-3">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+            <h4 class="mb-0">Tender Entry</h4>
+            <button class="btn btn-outline-primary btn-sm" (click)="loadActivatedTenders()">
+                Activated Tenders
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary btn-sm" (click)="golist()">
+                Tender List
+            </button>
+        </div>
+    </div>
+
+    <form #f="ngForm" (ngSubmit)="save(f)" class="card shadow-sm p-3">
+
+        <div class="row g-3">
+
+            <!-- ======================================================
+            BASIC DETAILS
+            ====================================================== -->
+            <div class="col-12">
+                <h6 class="text-primary fw-bold border-bottom pb-1">
+                    Basic Details
+                </h6>
+            </div>
+
+            <!-- ORGANIZATION -->
+            <div class="col-md-3">
+                <label>Organization</label>
+                <select class="form-select" required [(ngModel)]="form.org_id" name="org_id">
+                    <option value="">Select</option>
+                    <option *ngFor="let o of orgs" [value]="o.org_id">
+                        {{o.org_name}}
+                    </option>
+                </select>
+            </div>
+
+            <!-- DIVISION AUTOCOMPLETE -->
+            <div class="col-md-3 position-relative">
+                <label>Panchayat / Municipality / Corporation</label>
+
+                <input class="form-control" name="div_name" [(ngModel)]="form.div_name" (input)="searchDivision()"
+                    autocomplete="off" placeholder="Start typing..." required>
+
+                <div *ngIf="showDivDropdown" class="list-group position-absolute w-100 shadow" style="z-index:999">
+
+                    <button type="button" class="list-group-item list-group-item-action"
+                        *ngFor="let d of divisionSuggestions" (click)="selectDivision(d)">
+
+                        {{d.div_name}}
+                        <small class="text-muted">({{d.dist_name}})</small>
+
+                    </button>
+                </div>
+            </div>
+
+            <!-- DISTRICT -->
+            <div class="col-md-3">
+                <label>District</label>
+                <input class="form-control" [value]="form.dist_name" readonly>
+            </div>
+
+            <!-- EXECUTIVE -->
+            <div class="col-md-3">
+                <label>Executive</label>
+                <select class="form-select" required [(ngModel)]="form.exec_id" name="exec_id">
+                    <option value="">Select</option>
+                    <option *ngFor="let e of executives" [value]="e.exec_id">
+                        {{e.exec_name}}
+                    </option>
+                </select>
+            </div>
+
+            <!-- DEPARTMENT -->
+            <div class="col-md-4">
+                <label>Department</label>
+                <div class="position-relative">
+                    <input class="form-control" name="department" [(ngModel)]="form.department"
+                        (input)="searchDepartment()" autocomplete="off" placeholder="Start typing department...">
+
+                    <div *ngIf="showDeptDropdown" class="list-group position-absolute w-100 shadow" style="z-index:999">
+
+                        <button type="button" class="list-group-item list-group-item-action"
+                            *ngFor="let d of departmentSuggestions" (click)="selectDepartment(d)">
+
+                            {{d.dept_name}}
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT -->
+            <div class="col-md-8">
+                <label>Project Name</label>
+                <input class="form-control" required [(ngModel)]="form.project_name" name="project_name">
+            </div>
+
+            <div class="col-md-6">
+                <label>Tender Official ID</label>
+                <input class="form-control" required [(ngModel)]="form.t_official_id" name="tender_official_id">
+            </div>
+
+            <div class="col-md-6">
+                <label>Reference ID</label>
+                <input class="form-control" [(ngModel)]="form.reference_id" name="reference_id">
+            </div>
+
+            <div class="col-md-6">
+                <label>Tender Cut-off Date</label>
+                <input type="datetime-local" class="form-control" [(ngModel)]="form.tender_date" name="tender_date">
+            </div>
+
+            <!-- TYPE -->
+            <div class="col-md-3">
+                <label>Tender Type</label>
+                <select class="form-select" [(ngModel)]="form.tender_type" name="tender_type">
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
+                    <option value="Quotation">Quotation</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label>Tender Opening Date</label>
+                <input type="date" class="form-control" [(ngModel)]="form.tender_opening_date"
+                    name="tender_opening_sdate">
+            </div>
+
+            <!-- ======================================================
+            AMOUNTS
+            ====================================================== -->
+            <div class="col-12 mt-3">
+                <h6 class="text-primary fw-bold border-bottom pb-1">
+                    Amount Details
+                </h6>
+            </div>
+
+            <div class="col-md-3">
+                <label>Estimated Amount</label>
+                <input type="number" class="form-control" required [(ngModel)]="form.estimate_amount"
+                    name="estimate_amount">
+            </div>
+
+            <div class="col-md-3">
+                <label>Quoted Amount</label>
+                <input type="number" class="form-control" required [(ngModel)]="form.quoted_amount"
+                    name="quoted_amount">
+            </div>
+
+            <div class="col-md-3" *ngIf="form.tender_type==='Online'">
+                <label>Processing Fee</label>
+                <input type="number" class="form-control" [(ngModel)]="form.processing_fee" name="processing_fee">
+            </div>
+
+            <div class="col-md-3">
+                <label>Stamp Paper Fee</label>
+                <input type="number" class="form-control" [(ngModel)]="form.stamp_paper_fee" name="stamp_paper_fee">
+            </div>
+
+            <div class="col-md-3">
+                <label>Documentation Fee</label>
+                <input type="number" class="form-control" [(ngModel)]="form.documentation_fee" name="documentation_fee">
+            </div>
+
+            <div class="col-md-3">
+                <label>Other Expense</label>
+                <input type="number" class="form-control" [(ngModel)]="form.expense_amount" name="expense_amount">
+            </div>
+
+
+            <!-- ======================================================
+            OFFICIALS
+            ====================================================== -->
+
+
+            <div class="col-12 mt-3">
+                <h6 class="text-primary fw-bold border-bottom pb-1">
+                    Officials
+                </h6>
+            </div>
+
+            <div class="col-12" *ngFor="let o of officials; let i=index">
+
+                <div class="official-card">
+
+                    <!-- HEADER -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="fw-bold">Official {{ i + 1 }}</div>
+
+                        <button type="button" class="btn btn-danger btn-sm" *ngIf="officials.length > 1"
+                            (click)="removeOfficial(i)">
+                            X
+                        </button>
+                    </div>
+
+                    <!-- MAIN INFO -->
+                    <div class="row g-2">
+
+                        <div class="col-md-5">
+                            <input class="form-control" placeholder="Name" [(ngModel)]="o.name" name="name{{i}}">
+                        </div>
+
+                        <div class="col-md-5">
+                            <input class="form-control" placeholder="Designation" [(ngModel)]="o.designation"
+                                name="desig{{i}}">
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-sm btn-success w-100" (click)="addContact(i)">
+                                + Phone
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- CONTACTS -->
+                    <div class="mt-2" *ngFor="let c of o.contacts; let j=index">
+
+                        <div class="d-flex gap-2 align-items-center">
+
+                            <input class="form-control" placeholder="Phone Number" [(ngModel)]="c.phone"
+                                name="phone{{i}}{{j}}">
+
+                            <button type="button" class="btn btn-sm btn-danger" *ngIf="o.contacts.length > 1"
+                                (click)="removeContact(i, j)">
+                                -
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ADD OFFICIAL -->
+            <div class="col-12">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="addOfficial()">
+                    + Add Official
+                </button>
+            </div>
+
+            <!-- ======================================================
+            ITEMS
+            ====================================================== -->
+            <div class="col-12 mt-3">
+                <h6 class="text-primary fw-bold border-bottom pb-1">
+                    Item Details
+                </h6>
+            </div>
+            <div class="col-12" *ngFor="let it of items; let i=index">
+
+                <div class="row g-2 align-items-center">
+
+                    <!-- ITEM -->
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Item" [(ngModel)]="it.item_name" name="item{{i}}">
+                    </div>
+
+                    <!-- QTY -->
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" placeholder="Qty" [(ngModel)]="it.quantity"
+                            (ngModelChange)="recalculateItems()" name="qty{{i}}">
+                    </div>
+
+                    <!-- RATE -->
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" placeholder="Rate/Pc" [(ngModel)]="it.rate_per_piece"
+                            (ngModelChange)="recalculateItems()" name="rate{{i}}">
+                    </div>
+
+                    <!-- TOTAL -->
+                    <div class="col-md-2">
+                        <input class="form-control" [value]="(it.quantity || 0) * (it.rate_per_piece || 0)" readonly>
+                    </div>
+
+                    <!-- ACTION -->
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success btn-sm me-2" (click)="addItem()">+</button>
+
+                        <button type="button" class="btn btn-danger btn-sm" *ngIf="items.length>1"
+                            (click)="removeItem(i)">-</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GRAND TOTAL -->
+            <div class="text-end fw-bold text-primary">
+                Items Total : ₹ {{ itemsTotal }}
+            </div>
+
+            <div *ngIf="itemsTotal && form.quoted_amount && itemsTotal!=form.quoted_amount" class="text-warning small">
+                Items total is different from quoted amount (Allowed)
+            </div>
+
+
+            <!-- ======================================================
+DOCUMENT UPLOAD
+====================================================== -->
+            <div class="col-12 mt-3">
+                <h6 class="text-primary fw-bold border-bottom pb-1">
+                    Tender Notice
+                </h6>
+            </div>
+
+            <div class="col-md-6">
+                <label>Upload PDF</label>
+                <input type="file" class="form-control" accept="application/pdf" (change)="onFileSelected($event)">
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedFileName">
+                <label>Selected File</label>
+                <div class="form-control bg-light">
+                    {{ selectedFileName }}
+                </div>
+            </div>
+
+            <!-- ======================================================
+            STATUS
+            ====================================================== -->
+            <div class="col-12 mt-3">
+                <h6 class="text-primary fw-bold border-bottom pb-1">
+                    Status Details
+                </h6>
+            </div>
+
+            <div class="col-md-3">
+                <label>Tender Date</label>
+                <input type="date" class="form-control" required [(ngModel)]="form.tender_submission_date"
+                    name="tender_submission_date">
+            </div>
+
+            <div class="col-md-4">
+                <label>Status</label>
+                <select class="form-select" required [(ngModel)]="form.status_code" name="status_code">
+
+                    <option *ngFor="let s of statuses" [value]="s.status_code">
+                        {{s.status_label}}
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="col-md-5">
+                <label>Remarks</label>
+                <input class="form-control" [(ngModel)]="form.remarks" name="remarks">
+            </div>
+
+            <!-- SAVE -->
+            <div class="col-12 mt-2">
+                <button class="btn btn-primary" type="submit" [disabled]="!isFormValid()">
+                    Save Tender
+                </button>
+            </div>
+
+        </div>
+
+
+
+    </form>
+
+</div>
+
+
+<!-- ACTIVATED TENDERS DIALOG -->
+<div class="dialog-backdrop" *ngIf="showActivatedDialog" (click)="showActivatedDialog=false"></div>
+<div class="card shadow mt-3" *ngIf="showActivatedDialog">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5>Activated Tenders <span class="count-pill">{{ activatedTenders.length }}</span></h5>
+            <button class="btn btn-sm btn-secondary" (click)="showActivatedDialog=false">X</button>
+        </div>
+        <hr>
+        <table class="table table-sm table-bordered align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 25%">Project</th>
+                    <th style="width: 15%">Organization</th>
+                    <th style="width: 15%">Division</th>
+                    <th style="width: 15%">District</th>
+                    <th style="width: 15%">Cut Off Date</th>
+                    <th style="width: 15%"> Tender Type </th>
+                    <th style="width: 15%">Estimate Amount</th>
+                    <th style="width: 15%">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let t of activatedTenders" [class.table-primary]="t.id === selectedActivatedId">
+
+                    <!-- PROJECT -->
+                    <td>
+                        <div class="fw-bold">{{ t.project_name }}</div>
+                        <small class="text-muted">
+                            Ref: {{ t.reference_id || 'N/A' }}
+                        </small>
+                    </td>
+
+                    <!-- ORGANIZATION -->
+                    <td>
+                        {{ t.org_name || t.org_id }}
+                    </td>
+
+                    <!-- DIVISION -->
+                    <td>
+                        {{ t.div_name || t.div_id }}
+                    </td>
+
+                    <!-- DISTRICT -->
+                    <td>
+                        {{ t.dist_name || t.dist_id }}
+                    </td>
+
+                    <!-- DATE -->
+                    <td>
+                        <div>
+                            {{ t.tender_date | date:'d MMMM, y HH:mm' }}
+
+                            <span *ngIf="getTimeLeft(t.tender_date) as time" class="badge rounded-pill ms-2"
+                                [ngClass]="time.class">
+
+                                {{ time.text }}
+
+                            </span>
+                        </div>
+                    </td>
+
+                    <!-- TENDER TYPE -->
+                    <td>
+                        {{ t.tender_type || 'N/A' }}
+                    </td>
+
+                    <!-- AMOUNT -->
+                    <td>
+                        ₹ {{ t.estimate_amount || 0 }}
+                    </td>
+
+                    <!-- ACTION -->
+                    <td class="d-flex gap-1">
+                        <button class="btn btn-success btn-sm btn-action" (click)="selectActivated(t)">
+                            Select
+                        </button>
+
+                        <button class="btn btn-danger btn-sm btn-action" (click)="removeActivated(t)">
+                            Remove
+                        </button>
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+        <!-- EMPTY STATE -->
+        <div *ngIf="activatedTenders.length === 0" class="text-center text-muted py-3">
+            No activated tenders available
+        </div>
+    </div>
+</div>

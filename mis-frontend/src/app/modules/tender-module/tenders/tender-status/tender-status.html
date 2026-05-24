@@ -1,0 +1,550 @@
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-end gap-2 mb-2">
+
+        <button class="btn btn-primary btn-sm" (click)="goEntry()">
+            + New Tender
+        </button>
+
+        <button class="btn btn-primary btn-sm" (click)="golist()">
+            Tender List
+        </button>
+
+    </div>
+
+    <h4 class="mb-3">Tender Workflow</h4>
+
+    <!-- ======================================================
+HEADER
+====================================================== -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+
+            <div class="row g-2">
+
+                <!-- BASIC INFO -->
+                <div class="col-md-3"><b>ID:</b> {{ tender.tender_id }}</div>
+
+                <div class="col-md-3">
+                    <b>Type:</b>
+                    <span class="badge bg-secondary">
+                        {{ tender.tender_type }}
+                    </span>
+                </div>
+
+                <div class="col-md-4"><b>Project:</b> {{ tender.project_name }}</div>
+                <div class="col-md-2"><b>Executive:</b> {{ tender.exec_name }}</div>
+
+
+                <div class="col-md-3">
+                    <b>Status:</b>
+                    <span class="badge bg-primary">
+                        {{ tender.status_label }}
+                    </span>
+                </div>
+
+                <div class="col-md-3" *ngIf="latestDeliveryDueDate">
+                    <b>Delivery Due:</b> {{ latestDeliveryDueDate }}
+                </div>
+
+                <div class="col-12 mt-3">
+                    <b class="text-danger">Total Expenses:</b>
+                    ₹ {{ totalExpenses }}
+                </div>
+
+
+                <div class="col-12 mt-2">
+                    <b class="text-success">Purchase Cost:</b>
+                    ₹ {{ tender.total_purchase || 0 }}
+                </div>
+
+                <div class="col-12 mt-1">
+                    <b [ngClass]="tender.profit >= 0 ? 'text-success' : 'text-danger'">
+                        Profit / Loss:
+                    </b>
+                    ₹ {{ tender.profit }}
+                </div>
+
+            </div>
+
+            <!-- TOTAL ITEMS -->
+            <hr class="my-2">
+
+            <div class="row">
+
+                <!-- TOTAL ITEMS -->
+                <div class="col-12">
+                    <b>Total Items:</b> {{ totalItemsText }}
+                </div>
+
+                <!-- ITEM SUMMARY -->
+                <div class="col-12 mt-1">
+
+                    <div *ngIf="deliveredSummary">
+                        <b class="text-success">Delivered:</b>
+                        {{ deliveredSummary }}
+                    </div>
+
+                    <div *ngIf="pendingSummary">
+                        <b class="text-danger">Pending:</b>
+                        {{ pendingSummary }}
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-12 mt-2">
+                    <b>Supply Completion:</b>
+                    {{ tender.supply_completion }} %
+                </div>
+            </div>
+
+            <!-- ======================================================
+    PAYMENT SUMMARY ROW (NEW STRUCTURED ROW)
+    ====================================================== -->
+            <hr class="my-2">
+
+            <div class="row g-2 align-items-center">
+
+                <!-- RECEIVABLE -->
+                <div class="col-md-3">
+                    <b>Receivable:</b>
+                    ₹ {{ tender.final_total > 0 ? tender.final_total : 0 }}
+                </div>
+
+                <!-- RECEIVED -->
+                <div class="col-md-2">
+                    <b>Received:</b>
+                    ₹ {{ tender.payment_received_amount ?? 0 }}
+                </div>
+
+                <!-- TDS -->
+                <div class="col-md-2">
+                    <b>TDS:</b>
+                    ₹ {{ tender.tds_amount ?? 0 }}
+                </div>
+
+                <!-- EMD -->
+                <div class="col-md-2">
+                    <b>EMD/RD:</b>
+                    <ng-container *ngIf="tender.emd_rd_option === 'Yes'; else noEmd">
+                        ₹ {{ tender.emd_rd_amount ?? 0 }}
+                    </ng-container>
+                    <ng-template #noEmd>NO</ng-template>
+                </div>
+
+                <!-- EMD EXPIRY -->
+                <div class="col-md-2">
+                    <b>EMD Expiry:</b>
+                    {{ tender.emd_rd_option === 'Yes'
+                    ? (tender.emd_expiry_date || 'N/A')
+                    : 'N/A' }}
+                </div>
+
+                <!-- BALANCE -->
+                <div class="col-md-1 text-end">
+                    <b>Pending:</b>
+                    ₹ {{ tender.balance_amount ?? 0 }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ======================================================
+  UPDATE STATUS
+  ====================================================== -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+
+            <h6 class="mb-3">Update Status</h6>
+
+            <select class="form-select mb-3" [(ngModel)]="form.status_code">
+                <option value="">Select Next Stage</option>
+                <option *ngFor="let s of allowedStatuses" [value]="s.status_code">
+                    {{ s.status_label }}
+                </option>
+            </select>
+
+
+
+            <!-- TS-03 -->
+            <div *ngIf="form.status_code==='TS-03'" class="row g-2">
+                <div class="col-md-4">
+                    <label>Tender Rejection Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.tender_rejection_date">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Rejection Reason</label>
+                    <input type="text" class="form-control" [(ngModel)]="form.rejection_reason">
+                </div>
+            </div>
+
+            <!-- TS-04 -->
+            <div *ngIf="form.status_code==='TS-04'" class="row g-2">
+                <div class="col-md-4">
+                    <label>Tender Confirmation Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.tender_confirmed_date">
+                </div>
+            </div>
+
+            <!-- TS-05 -->
+            <div *ngIf="form.status_code==='TS-05'" class="row g-2">
+                <div class="col-md-4">
+                    <label>Sample Submitted Due Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.sample_due_date">
+                </div>
+            </div>
+
+            <!-- TS-06 -->
+            <div *ngIf="form.status_code==='TS-06'" class="row g-2">
+                <div class="col-md-4">
+                    <label>Sample Submitted Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.sample_submission_date">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Expense</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.sample_expense">
+                </div>
+            </div>
+
+            <!-- TS-20 SAMPLE REJECTED -->
+            <div *ngIf="form.status_code==='TS-20'" class="row g-2">
+
+                <div class="col-md-4">
+                    <label>Sample Rejected Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.sample_rejected_date">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Reason</label>
+                    <input type="text" class="form-control" [(ngModel)]="form.sample_rejection_reason">
+                </div>
+
+            </div>
+
+            <!-- TS-07 -->
+
+            <div *ngIf="form.status_code==='TS-07'" class="row g-2">
+
+                <!-- HEADER FIELDS -->
+                <div class="col-md-3">
+                    <label>Negotiation Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.negotiation_date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Quoted Amount</label>
+                    <input class="form-control" [value]="tender.quoted_amount" readonly>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Negotiated Amount <span>(can be rate/piece as well)</span></label>
+                    <input type="number" class="form-control" [(ngModel)]="form.negotiated_amount">
+                </div>
+
+            </div>
+
+
+            <!-- TS-10 SUPPLY ORDER ISSUED-->
+            <div *ngIf="form.status_code==='TS-10'" class="row g-2">
+
+                <!-- BASIC -->
+                <div class="col-md-3">
+                    <label>Supply Issue Date</label>
+                    <input type="datetime-local" class="form-control" [(ngModel)]="form.supply_issue_datetime"
+                        [max]="todayMaxDate()">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Secondary Agreement?</label>
+                    <select class="form-select" [(ngModel)]="form.secondary_agreement_option">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3" *ngIf="form.secondary_agreement_option==='Yes'">
+                    <label>Agreement Date</label>
+                    <input type="datetime-local" class="form-control" [(ngModel)]="form.secondary_agreement_date">
+                </div>
+
+                <!-- DELIVERY DUE -->
+                <div class="col-md-3">
+                    <label>Delivery Due Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.item_delivery_due_date">
+                </div>
+
+                <!-- ITEMS -->
+                <div class="col-12 fw-bold text-primary mt-3">
+                    Final Items
+                </div>
+
+                <div *ngFor="let it of form.items; let i=index" class="row g-2">
+
+                    <div class="col-md-2">
+                        <input class="form-control" [(ngModel)]="it.item_name">
+                    </div>
+
+                    <div class="col-md-1">
+                        <input type="number" class="form-control" [(ngModel)]="it.quantity"
+                            (ngModelChange)="calcSupplyTotals()">
+                    </div>
+
+                    <div class="col-md-1">
+                        <input type="number" class="form-control" [(ngModel)]="it.rate_per_piece"
+                            (ngModelChange)="calcSupplyTotals()">
+                    </div>
+
+                    <div class="col-md-2">
+                        <input class="form-control" [value]="(it.quantity||0)*(it.rate_per_piece||0)" readonly>
+                    </div>
+
+                    <!-- PURCHASE -->
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" placeholder="Purchase Price"
+                            [(ngModel)]="it.purchase_price" (ngModelChange)="calcSupplyTotals()">
+                    </div>
+
+                    <div class="col-md-2">
+                        <input class="form-control" [value]="(it.quantity||0)*(it.purchase_price||0)" readonly>
+                    </div>
+
+                    <div class="col-md-1">
+                        <button class="btn btn-outline-danger" (click)="removeItem(i)">✕</button>
+                    </div>
+
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-outline-primary" (click)="addItem()">+ Add Item</button>
+                </div>
+
+                <!-- ADDITIONAL WORK -->
+                <div class="col-md-3 mt-3">
+                    <label>Additional Work?</label>
+                    <select class="form-select" [(ngModel)]="form.additional_work_option"
+                        (ngModelChange)="calcSupplyTotals()">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <ng-container *ngIf="form.additional_work_option==='Yes'">
+
+                    <div *ngFor="let w of form.additionalWorks; let j=index" class="row g-2">
+
+                        <div class="col-md-3">
+                            <input class="form-control" [(ngModel)]="w.work_name">
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" [(ngModel)]="w.quantity"
+                                (ngModelChange)="calcSupplyTotals()">
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" [(ngModel)]="w.rate"
+                                (ngModelChange)="calcSupplyTotals()">
+                        </div>
+
+                        <div class="col-md-2">
+                            <input class="form-control" [value]="(w.quantity||0)*(w.rate||0)" readonly>
+                        </div>
+
+                        <div class="col-md-1">
+                            <button class="btn btn-outline-danger" (click)="removeWork(j)">✕</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-outline-success" (click)="addWork()">+ Add Work</button>
+                    </div>
+
+                </ng-container>
+
+                <!-- TOTALS -->
+                <div class="col-12 mt-3 fw-bold">
+                    Grand Total: ₹ {{form.grand_total || 0}}
+                </div>
+
+                <div class="col-md-3">
+                    <label>Final Total</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.final_total">
+                </div>
+
+            </div>
+
+            <!-- TS-11 -->
+            <div *ngIf="form.status_code==='TS-11'" class="row g-2">
+                <div class="col-md-4">
+                    <label>Agreement Submission Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.secondary_agreement_date">
+                </div>
+            </div>
+
+
+            <!-- TS-13 -->
+            <div *ngIf="form.status_code==='TS-13'" class="mb-2">
+                <label>Billed Date</label>
+                <input type="date" class="form-control" [(ngModel)]="form.billed_date">
+            </div>
+
+            <!-- TS-15 BILLING -->
+            <div *ngIf="form.status_code==='TS-15'" class="row g-2">
+
+                <div class="col-md-3">
+                    <label>Billed Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.billed_date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>delivery Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.delivery_date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Supply Expense</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.supply_expense">
+                </div>
+
+
+
+                <div class="col-12 mt-2 fw-semibold text-primary">
+                    Pending Items:
+                    <span *ngFor="let p of pendingItems">
+                        {{p.item_name}} (Pending {{p.pending_qty}})
+                        <span *ngIf="p.delivered_qty"> | Delivered {{p.delivered_qty}}</span>
+                        &nbsp;
+                    </span>
+                </div>
+
+                <div class="col-12" *ngFor="let it of billingItems">
+                    <div class="row g-2 mt-1">
+                        <div class="col-md-4">
+                            <input class="form-control" [value]="it.item_name + ' ('+it.pending_qty+')'" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" [(ngModel)]="it.supply_qty"
+                                (ngModelChange)="validateSupplyQty(it); calculateSupplyStatus()">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Supply Status</label>
+                        <select class="form-select" [(ngModel)]="form.supplied_status">
+                            <option value="">Select</option>
+                            <option value="Partial">Partial</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TS-17 PAYMENT -->
+            <div *ngIf=" form.status_code==='TS-17'" class=" row g-2">
+
+                <div class="col-md-3">
+                    <label>Total Amount (Pending)</label>
+                    <input class="form-control"
+                        [value]="tender.balance_amount || tender.final_total || tender.negotiated_amount || tender.quoted_amount"
+                        readonly>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Received Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="form.payment_received_date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Received Amount</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.payment_received_amount"
+                        (ngModelChange)="calculatePayment()">
+                </div>
+
+                <div class="col-md-3">
+                    <label>TDS</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.tds_amount"
+                        (ngModelChange)="calculatePayment()">
+                </div>
+
+                <div class="col-md-3">
+                    <label>EMD/RD ?</label>
+                    <select class="form-select" name="emd_rd_option" [(ngModel)]="form.emd_rd_option"
+                        (ngModelChange)="calculatePayment()" required>
+
+                        <option [ngValue]="null">Already entered</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+
+                    </select>
+                </div>
+
+                <div *ngIf="form.emd_rd_option==='Yes'" class="row g-2 mt-1">
+
+                    <div class="col-md-3">
+                        <label>Holder</label>
+                        <select class="form-select" [(ngModel)]="form.emd_rd_holder">
+                            <option value="Panchayat">Panchayat</option>
+                            <option value="Company">Company</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>EMD Amount</label>
+                        <input type="number" class="form-control" [(ngModel)]="form.emd_rd_amount"
+                            (ngModelChange)="calculatePayment()">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>EMD Expiry</label>
+                        <input type="date" class="form-control" [(ngModel)]="form.emd_expiry_date">
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <label>Payment Status</label>
+                    <input class="form-control" [value]="form.payment_status" readonly>
+                </div>
+
+            </div>
+
+            <input class="form-control my-3" placeholder="Remarks" [(ngModel)]="form.remarks">
+
+            <button class="btn btn-primary" [disabled]="!isFormValid()" (click)="save()">
+                Update Status
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ======================================================
+  TIMELINE
+  ====================================================== -->
+    <div *ngFor="let l of statusLog" class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+            <div class="fw-semibold">
+                {{ getTimelineData(l).title }}
+            </div>
+
+            <div *ngFor="let x of getTimelineData(l).lines" class="small">
+                {{x}}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

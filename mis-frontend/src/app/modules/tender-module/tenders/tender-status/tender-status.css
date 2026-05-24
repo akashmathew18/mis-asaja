@@ -1,0 +1,362 @@
+/* tender-workflow.component.css - Frosted Glass & Midnight Calm Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ================================================
+   GLOBAL & CONTAINER
+   ================================================ */
+:host {
+    display: block;
+    background: linear-gradient(135deg, #EBF4F5 0%, #D6E3EF 50%, #BECDE4 100%);
+    background-attachment: fixed;
+    position: relative;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+:host::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===========================================
+   HEADER BUTTONS & TITLE
+   =========================================== */
+h4 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: linear-gradient(120deg, #1A2F4F, #1F4172);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0 0 1rem 0;
+    display: inline-block;
+    position: relative;
+}
+
+h4::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A4E77, #103783);
+    border-radius: 3px;
+}
+
+.btn-primary.btn-sm {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border: none;
+    border-radius: 2rem;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+    color: white;
+    box-shadow: 0 2px 6px rgba(16, 55, 131, 0.2);
+}
+
+.btn-primary.btn-sm:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #0F3F7A, #0A1828);
+    box-shadow: 0 4px 10px rgba(16, 55, 131, 0.3);
+}
+
+/* ===========================================
+   CARDS (Glassmorphism)
+   =========================================== */
+.card.shadow-sm {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(0px);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.25s ease-out;
+}
+
+.card.shadow-sm:hover {
+    background: white;
+    box-shadow: 0 28px 38px -16px rgba(16, 55, 131, 0.18) !important;
+    border-color: rgba(181, 198, 224, 0.6);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Badges inside header info */
+.badge.bg-secondary,
+.badge.bg-primary {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    letter-spacing: 0.3px;
+}
+
+.badge.bg-secondary {
+    background: linear-gradient(135deg, #5A6E7A, #4A5C68) !important;
+}
+
+.badge.bg-primary {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A) !important;
+}
+
+/* Text colors */
+.text-danger {
+    color: #B22234 !important;
+    font-weight: 700;
+}
+
+.text-success {
+    color: #1A7F4A !important;
+    font-weight: 700;
+}
+
+/* ===========================================
+   FORM CONTROLS
+   =========================================== */
+label {
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2C4F6E;
+    margin-bottom: 0.3rem;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid rgba(65, 110, 160, 0.25);
+    border-radius: 1.5rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2A4E77;
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.15);
+    outline: none;
+    background-color: white;
+}
+
+input[readonly] {
+    background-color: #EFF3F8;
+    font-weight: 600;
+    color: #1A2F4F;
+}
+
+/* ===========================================
+   BUTTONS (Update Status, Add Item, Remove)
+   =========================================== */
+.btn-primary:not(.btn-sm) {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.8rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    color: white;
+}
+
+.btn-primary:not(.btn-sm):hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0F3F7A, #0A1828);
+    box-shadow: 0 6px 14px rgba(16, 55, 131, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-danger {
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+    transition: all 0.2s;
+}
+
+.btn-outline-primary {
+    border-color: #1F4172;
+    color: #1F4172;
+    background: white;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #1F4172, #0F2A4A);
+    border-color: transparent;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-outline-success {
+    border-color: #1A7F4A;
+    color: #1A7F4A;
+    background: white;
+}
+
+.btn-outline-success:hover {
+    background: linear-gradient(135deg, #1A7F4A, #0F5A34);
+    border-color: transparent;
+    color: white;
+}
+
+.btn-outline-danger {
+    border-color: #991B1B;
+    color: #991B1B;
+    background: white;
+}
+
+.btn-outline-danger:hover {
+    background: linear-gradient(135deg, #991B1B, #6E1313);
+    border-color: transparent;
+    color: white;
+}
+
+/* ===========================================
+   TIMELINE (Vertical styled)
+   =========================================== */
+.timeline-item {
+    display: flex;
+    margin-bottom: 1.2rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #2A4E77, #103783);
+    box-shadow: 0 0 0 3px rgba(42, 78, 119, 0.2);
+    z-index: 1;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1rem;
+    bottom: -1rem;
+    width: 2px;
+    background: rgba(42, 78, 119, 0.25);
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    padding: 0.8rem 1.2rem;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: all 0.2s;
+}
+
+.timeline-content:hover {
+    background: white;
+    transform: translateX(4px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-content .fw-semibold {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #1A2F4F;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-content .small {
+    font-size: 0.75rem;
+    color: #4A5B6E;
+    line-height: 1.4;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .row.g-2 > [class*="col-"] {
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-content {
+        padding: 0.6rem 1rem;
+    }
+
+    .timeline-content .fw-semibold {
+        font-size: 0.8rem;
+    }
+
+    .timeline-content .small {
+        font-size: 0.7rem;
+    }
+}
+
+/* ===========================================
+   ELEGANT SCROLLBAR
+   =========================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #eef2f6;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

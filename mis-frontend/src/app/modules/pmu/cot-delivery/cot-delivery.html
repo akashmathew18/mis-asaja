@@ -1,0 +1,585 @@
+<div class="container mt-3" #formSection>
+
+    <div class="d-flex justify-content-between align-items-start mb-4">
+
+        <h4>COT Delivery</h4>
+
+        <div class="card shadow-sm border-0 px-3 py-2 text-end">
+
+            <div>
+                <strong>Total Expense:</strong>
+                ₹ {{ footerTotals.total_expense | number:'1.2-2' }}
+            </div>
+
+            <div>
+                <strong>Total Sale:</strong>
+                ₹ {{ footerTotals.total_sale | number:'1.2-2' }}
+            </div>
+
+            <div [class.text-success]="footerTotals.total_profit >= 0"
+                [class.text-danger]="footerTotals.total_profit < 0">
+
+                <strong>
+                    {{ footerTotals.total_profit >= 0 ? 'Profit' : 'Loss' }}:
+                </strong>
+
+                ₹ {{ footerTotals.total_profit | number:'1.2-2' }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <form #cotForm="ngForm" class="card p-4 mb-4">
+
+        <div class="row g-3">
+
+            <!-- DATE -->
+            <div class="col-md-3">
+                <label>Date</label>
+                <input type="date" class="form-control" name="delivery_date" [(ngModel)]="form.delivery_date" required>
+            </div>
+
+            <!-- PANCHAYATH SEARCH -->
+            <div class="col-md-3 position-relative">
+                <label>Panchayat</label>
+
+                <input class="form-control" name="panchayath_name" [(ngModel)]="form.panchayath_name"
+                    (input)="searchDivision()" autocomplete="off" required>
+
+                <!-- LIVE SEARCH DROPDOWN -->
+                <div *ngIf="showDropdown" class="list-group position-absolute w-100 shadow" style="z-index:999">
+
+                    <button type="button" class="list-group-item list-group-item-action"
+                        *ngFor="let d of divisionSuggestions" (click)="selectDivision(d)">
+
+                        {{d.div_name}}
+                        <small class="text-muted">({{d.dist_name}})</small>
+
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- DISTRICT AUTO SHOW -->
+            <div class="col-md-3">
+                <label>District</label>
+                <input class="form-control" [value]="form.district_name" readonly>
+            </div>
+
+            <!-- ======================================================
+ TEAM WISE ENTRY
+====================================================== -->
+
+            <div class="col-md-12 mt-3">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-header bg-light fw-bold">
+
+                        Team Wise Cot Entry
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- HEADER -->
+
+                        <div class="row fw-bold mb-2 text-muted">
+
+                            <div class="col-md-4">
+                                Team
+                            </div>
+
+                            <div class="col-md-2">
+                                No. of Cots
+                            </div>
+
+                            <div class="col-md-2">
+                                Rate / Cot
+                            </div>
+
+                            <div class="col-md-2">
+                                Total
+                            </div>
+
+                            <div class="col-md-2 text-center">
+                                Action
+                            </div>
+
+                        </div>
+
+                        <!-- ROWS -->
+
+                        <div *ngFor="let t of teamsData; let i = index" class="row g-2 align-items-center mb-2">
+
+                            <!-- TEAM -->
+
+                            <div class="col-md-4">
+
+                                <select class="form-control" [(ngModel)]="t.team_id" name="team_{{i}}" required>
+
+                                    <option value="" disabled>
+                                        Select Team
+                                    </option>
+
+                                    <option *ngFor="let tm of teams" [value]="tm.team_id">
+
+                                        {{ tm.team_name }}
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- QTY -->
+
+                            <div class="col-md-2">
+
+                                <input type="number" class="form-control" min="0" placeholder="Qty"
+                                    [(ngModel)]="t.no_of_cots" name="cot_{{i}}" (ngModelChange)="calculateTotalCots()"
+                                    required>
+
+                            </div>
+
+                            <!-- RATE -->
+
+                            <div class="col-md-2">
+
+                                <input type="number" class="form-control" min="0" placeholder="Rate"
+                                    [(ngModel)]="t.rate_per_cot" name="rate_{{i}}" (ngModelChange)="calculateTotal()"
+                                    required>
+
+                            </div>
+
+                            <!-- TOTAL -->
+
+                            <div class="col-md-2">
+
+                                <input type="number" class="form-control bg-light" [value]="t.total" readonly>
+
+                            </div>
+
+                            <!-- ACTION -->
+
+                            <div class="col-md-2 d-flex justify-content-center gap-1">
+
+                                <button type="button" class="btn btn-success btn-sm" (click)="addTeamRow()">
+
+                                    +
+
+                                </button>
+
+                                <button type="button" class="btn btn-danger btn-sm" *ngIf="teamsData.length > 1"
+                                    (click)="removeTeamRow(i)">
+
+                                    -
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ======================================================
+ SALE ENTRY
+====================================================== -->
+
+            <div class="col-md-12 mt-3">
+
+                <div class="fw-bold text-success border-bottom pb-1">
+
+                    Sale Entry
+
+                </div>
+
+            </div>
+            <!-- COT TYPE -->
+            <div class="col-md-3">
+                <label>Cot Type</label>
+                <input class="form-control" name="cot_type" [(ngModel)]="form.cot_type" required>
+            </div>
+
+            <!-- NUMBERS -->
+            <div class="col-md-2">
+                <label>No of Cots</label>
+                <input type="number" class="form-control" name="no_of_cots" [(ngModel)]="form.no_of_cots" readonly>
+            </div>
+
+            <div class="col-md-2">
+                <label>Sale price / Cot</label>
+                <input type="number" class="form-control" name="sale_rate_per_cot" [(ngModel)]="form.sale_rate_per_cot"
+                    (ngModelChange)="calculateTotal()" required>
+            </div>
+
+            <div class="col-md-3">
+
+                <label>Total Sale</label>
+
+                <input class="form-control" [value]="form.total_sale_amount" readonly>
+
+            </div>
+
+
+            <!-- ======================================================
+ PURCHASE ENTRY
+====================================================== -->
+
+            <div class="col-md-12 mt-3">
+
+                <div class="fw-bold text-danger border-bottom pb-1">
+
+                    Purchase / Expense Entry
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label>Total Team Purchase</label>
+
+                <input class="form-control bg-light" [value]="form.total_team_purchase" readonly>
+
+            </div>
+
+            <div class="col-md-2">
+                <label>Transport</label>
+                <input type="number" class="form-control" name="transportation" [(ngModel)]="form.transportation"
+                    (ngModelChange)="calculateTotal()">
+            </div>
+
+            <div class="col-md-2">
+                <label>Fitting</label>
+                <input type="number" class="form-control" name="fitting_charge" [(ngModel)]="form.fitting_charge"
+                    (ngModelChange)="calculateTotal()">
+            </div>
+
+            <div class="col-md-2">
+                <label>Loading</label>
+                <input type="number" class="form-control" name="loading_unloading" [(ngModel)]="form.loading_unloading"
+                    (ngModelChange)="calculateTotal()">
+            </div>
+
+            <div class="col-md-2">
+                <label>Other Charges</label>
+                <input type="number" class="form-control" name="other_charges" [(ngModel)]="form.other_charges"
+                    (ngModelChange)="calculateTotal()">
+            </div>
+
+            <!-- NET AMOUNT -->
+            <div class="col-md-3">
+                <label>Total Expenses</label>
+                <input class="form-control" [value]="netAmount" readonly>
+            </div>
+
+            <div class="col-md-6">
+                <label>Remarks</label>
+                <input class="form-control" name="remarks" [(ngModel)]="form.remarks">
+            </div>
+
+        </div>
+
+        <button class="btn btn-success mt-3" type="button" [disabled]="cotForm.invalid || saving"
+            (click)="save(cotForm)">
+            {{ editMode ? 'Update' : 'Save' }}
+        </button>
+
+        <button *ngIf="editMode" type="button" class="btn btn-secondary mt-3 ms-2" (click)="cancelEdit(cotForm)">
+
+            Cancel Edit
+
+        </button>
+
+        <div *ngIf="successMsg" class="alert alert-success mt-3">
+            {{ lastAction === 'update' ? 'Updated successfully' : 'Saved successfully' }}
+        </div>
+
+    </form>
+
+</div>
+
+<div class="card p-3 mb-3">
+
+    <div class="row g-3">
+
+        <!-- SEARCH -->
+
+        <div class="col-md-3">
+
+            <label>Search</label>
+
+            <input type="text" class="form-control" placeholder="Cot type / remarks" [(ngModel)]="search"
+                (ngModelChange)="triggerLiveFilter()">
+
+        </div>
+
+        <!-- PANCHAYATH -->
+
+        <div class="col-md-3">
+
+            <label>Panchayat</label>
+
+            <input type="text" class="form-control" placeholder="Search panchayat" [(ngModel)]="selectedPanchayath"
+                (ngModelChange)="triggerLiveFilter()">
+
+        </div>
+
+        <!-- DISTRICT -->
+
+        <div class="col-md-2">
+
+            <label>District</label>
+
+            <input type="text" class="form-control" placeholder="District" [(ngModel)]="selectedDistrict"
+                (ngModelChange)="triggerLiveFilter()">
+
+        </div>
+
+        <!-- DATE -->
+
+        <div class="col-md-2">
+
+            <label>Date</label>
+
+            <input type="date" class="form-control" [(ngModel)]="singleDate" (ngModelChange)="triggerLiveFilter()">
+
+        </div>
+
+        <!-- FROM -->
+
+        <div class="col-md-2">
+
+            <label>From</label>
+
+            <input type="date" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="triggerLiveFilter()">
+
+        </div>
+
+        <!-- TO -->
+
+        <div class="col-md-2">
+
+            <label>To</label>
+
+            <input type="date" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="triggerLiveFilter()">
+
+        </div>
+
+    </div>
+
+    <div class="mt-3 d-flex gap-2">
+
+        <button class="btn btn-primary" (click)="applyFilters()">
+
+            Search
+
+        </button>
+
+        <button class="btn btn-secondary" (click)="resetFilters()">
+
+            Reset
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+   LIST SECTION (UPDATED FOR div_name + dist_name)
+====================================================== -->
+<h5 class="mb-3">COT Delivery Records</h5>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm align-middle">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Panchayath</th>
+                <th>District</th>
+                <th>team</th>
+
+                <th>Cot Type</th>
+                <th>No. of Cots</th>
+
+                <th>Total Cot Purchase</th>
+
+                <th>Sale rate/Cot</th>
+                <th><strong>Total Sale</strong></th>
+
+
+                <th>Transport</th>
+                <th>Fitting</th>
+                <th>Loading</th>
+                <th>Other</th>
+
+                <th><strong>Total Expense</strong></th>
+
+                <th><strong>NET Profit/Loss</strong></th>
+
+                <th>Remarks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let r of filteredList">
+
+                <td>{{ r.delivery_date | date: 'd MMMM yyyy'}}</td>
+
+                <!-- ✅ SHOW NAME INSTEAD OF ID -->
+                <td>{{ r.div_name }}</td>
+                <td>{{ r.dist_name }}</td>
+                <td>{{ r.team_names }}</td>
+
+                <td>{{ r.cot_type }}</td>
+                <td>{{ r.no_of_cots }}</td>
+
+                <td>{{r.total_team_purchase}}</td>
+
+                <td>{{ r.sale_rate_per_cot }}</td>
+                <td> {{ r.total_sale_amount | number:'1.2-2' }}</td>
+
+                <td>{{ r.transportation }}</td>
+                <td>{{ r.fitting_charge }}</td>
+                <td>{{ r.loading_unloading }}</td>
+                <td>{{ r.other_charges }}</td>
+
+                <td><strong>{{ r.net_amount }}</strong></td>
+
+                <td>
+
+                    <strong [class.text-success]="
+            (r.total_sale_amount - r.net_amount) >= 0
+        " [class.text-danger]="
+            (r.total_sale_amount - r.net_amount) < 0
+        ">
+
+                        {{
+
+                        (
+                        r.total_sale_amount
+                        -
+                        r.net_amount
+                        )
+
+                        | number:'1.2-2'
+
+                        }}
+
+                    </strong>
+
+                </td>
+
+                <td>{{ r.remarks }}</td>
+
+                <td class="action-cell">
+                    <div class="action-buttons">
+
+                        <button class="btn btn-warning btn-sm btn-action" (click)="editRow(r)">
+                            Edit
+                        </button>
+
+                        <button class="btn btn-danger btn-sm btn-action" (click)="deleteRow(r.id)">
+                            Delete
+                        </button>
+
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr *ngIf="list.length === 0">
+                <td colspan="14" class="text-center text-muted">
+                    No COT Delivery records found
+                </td>
+            </tr>
+
+        </tbody>
+        <tfoot class="table-light summary-footer">
+
+            <tr>
+                <th colspan="5">TOTAL</th>
+
+                <!-- TOTAL COTS -->
+                <th>{{ footerTotals.total_cots }} </th>
+                <th> ₹ {{ footerTotals.total_cot_purchase }}</th>
+
+
+                <!-- EMPTY COLUMNS -->
+                <th colspan="1"></th>
+
+                <th class="text-success"> ₹ {{ footerTotals.total_sale | number: '1.2-2'}}</th>
+                <th> ₹ {{ footerTotals.total_transport | number:'1.2-2' }}</th>
+                <th> ₹ {{ footerTotals.total_fitting | number:'1.2-2' }}</th>
+                <th>₹ {{ footerTotals.total_loading | number:'1.2-2' }}</th>
+                <th> ₹ {{ footerTotals.total_others | number:'1.2-2' }}</th>
+
+                <!-- TOTAL EXPENSE -->
+
+                <th class="bg-danger-subtle text-danger fw-bold">₹ {{ footerTotals.total_expense | number:'1.2-2' }}
+                </th>
+
+                <!-- TOTAL PROFIT -->
+                <th class="fw-bold" [class.bg-success-subtle]="footerTotals.total_profit >= 0"
+                    [class.text-success]="footerTotals.total_profit >= 0"
+                    [class.bg-danger-subtle]="footerTotals.total_profit < 0"
+                    [class.text-danger]="footerTotals.total_profit < 0">
+                    ₹ {{ footerTotals.total_profit | number:'1.2-2' }} </th>
+
+                <th colspan="2"></th>
+            </tr>
+
+        </tfoot>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+        <div>
+
+            Total Records:
+            {{ totalRecords }}
+
+        </div>
+
+        <div class="btn-group">
+
+            <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage <= 1">
+
+                Prev
+
+            </button>
+
+            <button class="btn btn-sm btn-primary">
+
+                {{ currentPage }}
+
+            </button>
+
+            <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage >= totalPages">
+
+                Next
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

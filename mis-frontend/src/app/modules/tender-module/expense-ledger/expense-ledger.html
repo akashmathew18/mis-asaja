@@ -1,0 +1,215 @@
+<!-- expense-ledger.html -->
+
+<div class="container-fluid py-4">
+
+    <!-- =====================================================
+    HEADER
+    ====================================================== -->
+
+    <div class="d-flex justify-content-between align-items-start mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                TENDER Expense Ledger
+            </h2>
+
+        </div>
+
+        <!-- TOTAL -->
+
+        <div class="total-card">
+
+            <div class="small text-muted">
+                Overall Expense
+            </div>
+
+            <div class="total-amount">
+                ₹ {{ getOverallTotal() | number:'1.0-2' }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+    CARDS
+    ====================================================== -->
+
+    <div class="row g-4">
+
+        <div class="col-xl-4 col-lg-6" *ngFor="let tender of groupedExpenses">
+
+            <div class="ledger-card">
+
+                <!-- ADD BTN -->
+
+                <div class="text-end mb-2">
+
+                    <button class="btn btn-outline-primary btn-sm" (click)="openAddExpense(tender)">
+                        + Add Expense
+                    </button>
+
+                </div>
+
+                <!-- HEADER -->
+
+                <div class="fw-bold tender-id">
+
+                    {{ tender.tender_id }}
+
+                </div>
+
+                <div class="project-name">
+
+                    {{ tender.project_name }}
+
+                </div>
+
+                <div class="exec-name">
+
+                    {{ tender.exec_name }}
+
+                </div>
+
+                <hr>
+
+                <!-- ITEMS -->
+
+                <div class="expense-row" *ngFor="let exp of tender.expenses">
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <span class="expense-pill">
+
+                            {{ exp.expense_type }}
+
+                        </span>
+
+                        <span>
+
+                            {{ exp.expense_date }}
+
+                        </span>
+
+                    </div>
+
+                    <div class="expense-amount">
+
+                        ₹ {{ exp.amount }}
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- TOTAL -->
+
+                <div class="d-flex justify-content-between">
+
+                    <div class="fw-bold total-label">
+
+                        Total
+
+                    </div>
+
+                    <div class="fw-bold total-red">
+
+                        ₹ {{ tender.total }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+BACKDROP
+====================================================== -->
+
+<div class="dialog-backdrop" *ngIf="showDialog"></div>
+
+<!-- =====================================================
+DIALOG
+====================================================== -->
+
+<div class="expense-dialog" *ngIf="showDialog">
+
+    <h3 class="dialog-title">
+
+        Add Expense
+
+    </h3>
+
+    <!-- TYPE -->
+
+    <div class="mb-3">
+
+        <select class="form-select" [(ngModel)]="expenseForm.expense_type">
+
+            <option value="">
+                Select Type
+            </option>
+
+            <option value="Sample">
+                Sample
+            </option>
+
+            <option value="Supply">
+                Supply
+            </option>
+
+            <option value="Misc">
+                Misc
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- AMOUNT -->
+
+    <div class="mb-3">
+
+        <input type="number" class="form-control" placeholder="Amount" [(ngModel)]="expenseForm.amount">
+
+    </div>
+
+    <!-- DATE -->
+
+    <div class="mb-3">
+
+        <input type="date" class="form-control" [(ngModel)]="expenseForm.expense_date">
+
+    </div>
+
+    <!-- REMARKS -->
+
+    <div class="mb-3">
+
+        <input type="text" class="form-control" placeholder="Remarks" [(ngModel)]="expenseForm.remarks">
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="d-flex justify-content-end gap-2">
+
+        <button class="btn btn-secondary" (click)="closeDialog()">
+            Cancel
+        </button>
+
+        <button class="btn btn-primary" (click)="saveExpense()">
+            Save
+        </button>
+
+    </div>
+
+</div>

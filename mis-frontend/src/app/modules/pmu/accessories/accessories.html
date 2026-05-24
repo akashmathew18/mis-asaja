@@ -1,0 +1,230 @@
+<div class="container mt-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>Accessories Purchase</h4>
+
+        <div class="card p-2 bg-success text-white">
+            <strong>
+                Total Accessories Expense:
+                ₹ {{ grandTotal | number:'1.2-2' }}
+            </strong>
+        </div>
+
+    </div>
+
+    <form #accForm="ngForm" class="card p-3 mb-4">
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+                <label>Date</label>
+                <input type="date" class="form-control" name="purchase_date" [(ngModel)]="form.purchase_date" required>
+            </div>
+
+            <div class="col-md-3">
+                <label>Accessory Name</label>
+                <input class="form-control" name="accessory_name" [(ngModel)]="form.accessory_name" required>
+            </div>
+
+            <div class="col-md-3">
+                <label>Amount</label>
+                <input type="number" class="form-control" name="amount" [(ngModel)]="form.amount"
+                    (ngModelChange)="calculateTotal()" min="0" required>
+            </div>
+
+            <div class="col-md-3">
+                <label>Transportation</label>
+                <input type="number" class="form-control" name="transportation" [(ngModel)]="form.transportation"
+                    (ngModelChange)="calculateTotal()" min="0" required>
+            </div>
+
+            <div class="col-md-3">
+                <label>Other Expense</label>
+                <input type="number" class="form-control" name="other_expense" [(ngModel)]="form.other_expense"
+                    (ngModelChange)="calculateTotal()" min="0" required>
+            </div>
+
+            <div class="col-md-3">
+                <label>Total Expense</label>
+                <input class="form-control" [value]="totalExpense" readonly>
+            </div>
+
+
+            <!-- Remarks -->
+            <div class="col-md-6">
+                <label>Remarks</label>
+                <input type="text" class="form-control" name="remarks" [(ngModel)]="form.remarks"
+                    placeholder="Optional notes">
+            </div>
+
+        </div>
+
+        <button type="button" class="btn btn-success mt-3" [disabled]="accForm.invalid || saving"
+            (click)="save(accForm)">
+            {{ editMode ? 'Update' : 'Save' }}
+        </button>
+
+        <div *ngIf="successMsg" class="alert alert-success mt-3">
+            {{ lastAction === 'update' ? 'Entry updated successfully' : 'Entry created successfully' }}
+        </div>
+
+
+    </form>
+
+    <div class="card p-3 mb-3">
+
+        <div class="row g-3">
+
+            <!-- SEARCH -->
+            <div class="col-md-3">
+                <label>Search</label>
+
+                <input type="text" class="form-control" placeholder="Accessory / Remarks / Date" [(ngModel)]="search"
+                    (ngModelChange)="triggerLiveFilter()" name="search">
+            </div>
+
+            <!-- DATE -->
+            <div class="col-md-3">
+                <label>Date</label>
+
+                <input type="date" class="form-control" [(ngModel)]="singleDate" (ngModelChange)="triggerLiveFilter()"
+                    name="singleDate">
+            </div>
+
+            <!-- FROM -->
+            <div class="col-md-3">
+                <label>From</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="triggerLiveFilter()"
+                    name="dateFrom">
+            </div>
+
+            <!-- TO -->
+            <div class="col-md-3">
+                <label>To</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="triggerLiveFilter()"
+                    name="dateTo">
+            </div>
+
+        </div>
+
+        <div class="mt-3 d-flex gap-2">
+
+            <button class="btn btn-primary" (click)="applyFilters()">
+                Search
+            </button>
+
+            <button class="btn btn-secondary" (click)="resetFilters()">
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+
+    <h5>Accessories Records</h5>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Accessory</th>
+                    <th>Amount</th>
+                    <th>Transport</th>
+                    <th>Other</th>
+                    <th>Total</th>
+
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of filteredList">
+                    <td>{{ r.purchase_date | date: 'd MMMM yyyy' }}</td>
+                    <td>{{ r.accessory_name }}</td>
+                    <td>{{ r.amount }}</td>
+                    <td>{{ r.transportation }}</td>
+                    <td>{{ r.other_expense }}</td>
+                    <td>{{ r.total_expense }}</td>
+
+                    <td>{{ r.remarks }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" (click)="editRow(r)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteRow(r.id)">Delete</button>
+                    </td>
+
+                </tr>
+            </tbody>
+
+            <tfoot class="table-light">
+
+                <tr>
+
+                    <th colspan="2">
+                        TOTAL
+                    </th>
+
+                    <th>
+                        ₹ {{ footerTotals.total_amount | number:'1.2-2' }}
+                    </th>
+
+                    <th>
+                        ₹ {{ footerTotals.total_transport | number:'1.2-2' }}
+                    </th>
+
+                    <th>
+                        ₹ {{ footerTotals.total_other | number:'1.2-2' }}
+                    </th>
+
+                    <th>
+                        ₹ {{ footerTotals.grand_total | number:'1.2-2' }}
+                    </th>
+
+                    <th colspan="3"></th>
+
+                </tr>
+
+            </tfoot>
+
+
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <div>
+                Total Records: {{ totalRecords }}
+            </div>
+
+            <div class="btn-group">
+
+                <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage - 1)"
+                    [disabled]="currentPage === 1">
+
+                    Prev
+
+                </button>
+
+                <button class="btn btn-sm btn-primary">
+                    {{ currentPage }}
+                </button>
+
+                <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage + 1)"
+                    [disabled]="currentPage === totalPages">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,294 @@
+<div class="container mt-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>Wood Expense</h4>
+
+        <div class="card p-2 bg-success text-white">
+            <strong>
+                Total Wood Expense:
+                ₹ {{ grandTotal | number:'1.2-2' }}
+            </strong>
+        </div>
+
+    </div>
+
+    <!-- FORM -->
+    <form #woodForm="ngForm" class="card p-3 mb-4">
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+                <label>Date</label>
+                <input type="date" class="form-control" name="expense_date" [(ngModel)]="form.expense_date" required>
+            </div>
+
+            <div class="col-md-3">
+                <label>Wood Type</label>
+                <input class="form-control" name="wood_type" [(ngModel)]="form.wood_type" required>
+            </div>
+
+            <div class="col-md-2">
+                <label>Cubic</label>
+                <input type="number" class="form-control" name="cubic" [(ngModel)]="form.cubic"
+                    (ngModelChange)="calculateTotal()" required min="0.01">
+            </div>
+
+            <div class="col-md-2">
+                <label>Rate / Cubic</label>
+                <input type="number" class="form-control" name="rate_per_cubic" [(ngModel)]="form.rate_per_cubic"
+                    (ngModelChange)="calculateTotal()" required min="0.01">
+            </div>
+
+            <div class="col-md-2">
+                <label>Cutting</label>
+                <input type="number" class="form-control" name="cutting_expense" [(ngModel)]="form.cutting_expense"
+                    (ngModelChange)="calculateTotal()" required min="0">
+            </div>
+
+            <div class="col-md-2">
+                <label>Planing</label>
+                <input type="number" class="form-control" name="planing_expense" [(ngModel)]="form.planing_expense"
+                    (ngModelChange)="calculateTotal()" required min="0">
+            </div>
+
+            <div class="col-md-2">
+                <label>Transport</label>
+                <input type="number" class="form-control" name="transportation_expense"
+                    [(ngModel)]="form.transportation_expense" (ngModelChange)="calculateTotal()" required min="0">
+            </div>
+
+            <div class="col-md-3">
+
+                <label>Team</label>
+
+                <input type="text" class="form-control" [class.is-invalid]="teamInvalid" list="teamList"
+                    placeholder="Type & search team" name="teamSearch" [(ngModel)]="teamSearchText"
+                    (ngModelChange)="onTeamSearchChange($event)" required>
+
+                <div class="invalid-feedback d-block" *ngIf="teamInvalid">
+
+                    Please select a valid team from the dropdown
+
+                </div>
+
+                <datalist id="teamList">
+                    <option *ngFor="let t of teams" [value]="t.team_name">
+                    </option>
+                </datalist>
+
+            </div>
+
+            <!-- TOTAL -->
+            <div class="col-md-3">
+                <label>Total Expense</label>
+                <input class="form-control" [value]="totalExpense" readonly>
+            </div>
+
+            <div class="col-md-6">
+                <label>Remarks</label>
+                <input class="form-control" name="remarks" [(ngModel)]="form.remarks">
+            </div>
+
+        </div>
+
+        <!-- SAVE BUTTON -->
+
+        <button type="button" class="btn btn-success mt-3" [disabled]="woodForm.invalid || saving"
+            (click)="save(woodForm)">
+            {{ editMode ? 'Update' : 'Save' }}
+        </button>
+
+        <div *ngIf="successMsg" class="alert alert-success mt-3">
+            {{ lastAction === 'update' ? 'Entry updated successfully' : 'Entry created successfully' }}
+        </div>
+
+
+
+    </form>
+
+    <div class="card p-3 mb-3">
+
+        <div class="row g-3">
+
+            <!-- SEARCH -->
+            <div class="col-md-3">
+
+                <label>Search</label>
+
+                <input type="text" class="form-control" placeholder="Wood / Team / Remarks" [(ngModel)]="search"
+                    (ngModelChange)="triggerLiveFilter()" name="search">
+            </div>
+
+            <!-- TEAM -->
+            <div class="col-md-3">
+
+                <label>Team</label>
+
+                <input type="text" class="form-control" list="filterTeamList" placeholder="Search team"
+                    [(ngModel)]="selectedTeamText" (ngModelChange)="onFilterTeamChange($event)" name="selectedTeamText">
+
+                <datalist id="filterTeamList">
+
+                    <option *ngFor="let t of teams" [value]="t.team_name">
+                    </option>
+
+                </datalist>
+
+            </div>
+
+            <!-- DATE -->
+            <div class="col-md-2">
+
+                <label>Date</label>
+
+                <input type="date" class="form-control" [(ngModel)]="singleDate" (ngModelChange)="triggerLiveFilter()"
+                    name="singleDate">
+            </div>
+
+            <!-- FROM -->
+            <div class="col-md-2">
+
+                <label>From</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="triggerLiveFilter()"
+                    name="dateFrom">
+            </div>
+
+            <!-- TO -->
+            <div class="col-md-2">
+
+                <label>To</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="triggerLiveFilter()"
+                    name="dateTo">
+            </div>
+
+        </div>
+
+        <div class="mt-3 d-flex gap-2">
+
+            <button class="btn btn-primary" (click)="applyFilters()">
+
+                Search
+
+            </button>
+
+            <button class="btn btn-secondary" (click)="resetFilters()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- LIST -->
+    <h5>Wood Expense Records</h5>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Wood</th>
+                    <th>Team</th>
+                    <th>Cubic</th>
+                    <th>Rate/Cubic</th>
+                    <th>Cut</th>
+                    <th>Plan</th>
+                    <th>Trans</th>
+                    <th>Total</th>
+
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of list">
+                    <td>{{ r.expense_date | date: 'd MMMM y' }} </td>
+                    <td>{{ r.wood_type }}</td>
+                    <td>{{ r.team_name }}</td>
+                    <td>{{ r.cubic }}</td>
+                    <td>{{ r.rate_per_cubic }}</td>
+                    <td>{{ r.cutting_expense }}</td>
+                    <td>{{ r.planing_expense }}</td>
+                    <td>{{ r.transportation_expense }}</td>
+                    <td>{{ r.total_expense }}</td>
+
+                    <td>{{ r.remarks }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" (click)="editRow(r)">Edit</button>
+                        <button class="btn btn-sm btn-danger" (click)="deleteRow(r.id)">Delete</button>
+                    </td>
+
+                </tr>
+            </tbody>
+
+            <tfoot class="table-light">
+
+                <tr>
+
+                    <th colspan="3">TOTAL</th>
+
+                    <th>
+                        {{ footerTotals.total_cubic || 0 }}
+                    </th>
+
+                    <th>-</th>
+
+                    <th>
+                        {{ footerTotals.total_cutting || 0 }}
+                    </th>
+
+                    <th>
+                        {{ footerTotals.total_planing || 0 }}
+                    </th>
+
+                    <th>
+                        {{ footerTotals.total_transport || 0 }}
+                    </th>
+
+                    <th>
+                        ₹ {{ footerTotals.grand_total || 0 }}
+                    </th>
+
+                    <th colspan="3"></th>
+
+                </tr>
+
+            </tfoot>
+
+        </table>
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+        <div>
+            Total Records: {{ totalRecords }}
+        </div>
+
+        <div class="btn-group">
+
+            <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage === 1">
+                Prev
+            </button>
+
+            <button class="btn btn-sm btn-primary">
+                {{ currentPage }}
+            </button>
+
+            <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage === totalPages">
+                Next
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

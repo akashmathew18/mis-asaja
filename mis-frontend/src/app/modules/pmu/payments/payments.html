@@ -1,0 +1,325 @@
+<div class="container mt-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>Payments</h4>
+
+        <div class="card p-2 bg-success text-white">
+            <strong>
+                Total Payments:
+                ₹ {{ grandTotal | number:'1.2-2' }}
+            </strong>
+        </div>
+
+    </div>
+
+    <!-- FORM -->
+
+    <form #ledgerForm="ngForm" class="card p-3 mb-4 shadow-sm">
+
+        <div class="row g-3">
+
+            <!-- DATE -->
+
+            <div class="col-md-3">
+
+                <label>Date</label>
+
+                <input type="date" class="form-control" name="entry_date" [(ngModel)]="form.entry_date" required>
+
+            </div>
+
+            <!-- TEAM -->
+
+            <div class="col-md-3">
+
+                <label>Team</label>
+
+                <input type="text" class="form-control" list="teamList" placeholder="Type & search team"
+                    name="teamSearch" [(ngModel)]="teamSearchText" (ngModelChange)="onTeamSearchChange($event)"
+                    required>
+
+                <datalist id="teamList">
+
+                    <option *ngFor="let t of teams" [value]="t.team_name">
+                    </option>
+
+                </datalist>
+
+            </div>
+
+            <!-- TYPE -->
+
+            <div class="col-md-3">
+
+                <label>Type</label>
+
+                <select class="form-control" name="entry_type" [(ngModel)]="form.entry_type" required>
+
+                    <option *ngFor="let t of entryTypes" [value]="t">
+
+                        {{ t }}
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- AMOUNT -->
+
+            <div class="col-md-3">
+
+                <label>Amount</label>
+
+                <input type="number" class="form-control" name="amount" [(ngModel)]="form.amount" required min="0">
+
+            </div>
+
+            <!-- REMARKS -->
+
+            <div class="col-md-6">
+
+                <label>Remarks</label>
+
+                <input type="text" class="form-control" name="remarks" [(ngModel)]="form.remarks"
+                    placeholder="Optional notes">
+
+            </div>
+
+        </div>
+
+        <!-- SAVE -->
+
+        <button type="button" class="btn btn-success mt-3" [disabled]="ledgerForm.invalid || saving"
+            (click)="save(ledgerForm)">
+
+            {{ editMode ? 'Update' : 'Save' }}
+
+        </button>
+
+        <!-- SUCCESS -->
+
+        <div *ngIf="successMsg" class="alert alert-success mt-3">
+
+            {{ lastAction === 'update'
+            ? 'Entry updated successfully'
+            : 'Entry created successfully' }}
+
+        </div>
+
+    </form>
+
+    <!-- FILTER CARD -->
+
+    <div class="card p-3 mb-3">
+
+        <div class="row g-3">
+
+            <!-- SEARCH -->
+
+            <div class="col-md-3">
+
+                <label>Search</label>
+
+                <input type="text" class="form-control" placeholder="Team / Remarks" [(ngModel)]="search"
+                    (ngModelChange)="triggerLiveFilter()" name="search">
+
+            </div>
+
+            <!-- TEAM -->
+
+            <div class="col-md-3">
+
+                <label>Team</label>
+
+                <input type="text" class="form-control" list="filterTeamList" placeholder="Search team"
+                    [(ngModel)]="selectedTeamText" (ngModelChange)="onFilterTeamChange($event)" name="selectedTeamText">
+
+                <datalist id="filterTeamList">
+
+                    <option *ngFor="let t of teams" [value]="t.team_name">
+                    </option>
+
+                </datalist>
+
+            </div>
+
+            <!-- DATE -->
+
+            <div class="col-md-2">
+
+                <label>Date</label>
+
+                <input type="date" class="form-control" [(ngModel)]="singleDate" (ngModelChange)="triggerLiveFilter()"
+                    name="singleDate">
+
+            </div>
+
+            <!-- FROM -->
+
+            <div class="col-md-2">
+
+                <label>From</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="triggerLiveFilter()"
+                    name="dateFrom">
+
+            </div>
+
+            <!-- TO -->
+
+            <div class="col-md-2">
+
+                <label>To</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="triggerLiveFilter()"
+                    name="dateTo">
+
+            </div>
+
+        </div>
+
+        <div class="mt-3 d-flex gap-2">
+
+            <button class="btn btn-primary" (click)="applyFilters()">
+
+                Search
+
+            </button>
+
+            <button class="btn btn-secondary" (click)="resetFilters()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <h5>Payment Records</h5>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-sm shadow-sm">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Date</th>
+                    <th>Team</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let r of filteredList">
+
+                    <td>
+                        {{ r.entry_date | date:'d MMMM yyyy' }}
+                    </td>
+
+                    <td>{{ r.team_name }}</td>
+
+                    <td>{{ r.entry_type }}</td>
+
+                    <td>
+                        ₹ {{ r.amount | number:'1.2-2' }}
+                    </td>
+
+                    <td>{{ r.remarks }}</td>
+
+                    <td>
+
+                        <button class="btn btn-sm btn-warning" (click)="editRow(r)">
+
+                            Edit
+
+                        </button>
+
+                        <button class="btn btn-sm btn-danger" (click)="deleteRow(r.id)">
+
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+            <tfoot class="table-light">
+
+                <tr>
+
+                    <th colspan="3">
+
+                        TOTAL
+
+                    </th>
+
+                    <th>
+
+                        ₹ {{ footerTotals.grand_total | number:'1.2-2' }}
+
+                    </th>
+
+                    <th colspan="2"></th>
+
+                </tr>
+
+            </tfoot>
+
+        </table>
+
+        <!-- PAGINATION -->
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <div>
+
+                Total Records:
+                {{ totalRecords }}
+
+            </div>
+
+            <div class="btn-group">
+
+                <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage - 1)"
+                    [disabled]="currentPage === 1">
+
+                    Prev
+
+                </button>
+
+                <button class="btn btn-sm btn-primary">
+
+                    {{ currentPage }}
+
+                </button>
+
+                <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage + 1)"
+                    [disabled]="currentPage === totalPages">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

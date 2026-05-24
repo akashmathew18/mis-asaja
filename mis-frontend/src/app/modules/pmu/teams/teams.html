@@ -1,0 +1,189 @@
+<div class="container-fluid py-3">
+
+    <!-- =====================================================
+         PAGE TITLE
+    ===================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>Team Master</h4>
+
+        <button class="btn btn-primary" routerLink="../team-ledger">
+
+            Team Ledger
+
+        </button>
+
+    </div>
+
+    <!-- =====================================================
+         FORM
+    ===================================================== -->
+
+    <form #teamForm="ngForm" class="team-card mb-4" novalidate>
+
+        <div class="row g-3">
+
+
+            <!-- TEAM NAME -->
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+
+                    Team Name
+
+                </label>
+
+                <input type="text" class="form-control" name="team_name" [(ngModel)]="form.team_name" required>
+
+            </div>
+
+            <!-- STATUS -->
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+
+                    Status
+
+                </label>
+
+                <select class="form-select" name="status" [(ngModel)]="form.status">
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+
+        <div class="mt-4 d-flex gap-2">
+
+            <button type="button" class="btn btn-save flex-grow-1" [disabled]="teamForm.invalid || saving"
+                (click)="save(teamForm)">
+
+                {{ editMode ? 'Update' : 'Save' }}
+
+            </button>
+
+            <button *ngIf="editMode" type="button" class="btn btn-secondary" (click)="cancelEdit(teamForm)">
+
+                Cancel
+
+            </button>
+
+        </div>
+
+        <!-- MESSAGE -->
+
+        <div *ngIf="successMsg" class="alert alert-info mt-3 mb-0">
+
+            {{ successMsg }}
+
+        </div>
+
+    </form>
+
+    <!-- =====================================================
+         TABLE
+    ===================================================== -->
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th width="20%">
+                        Team ID
+                    </th>
+
+                    <th width="40%">
+                        Team Name
+                    </th>
+
+                    <th width="20%">
+                        Status
+                    </th>
+
+                    <th width="20%">
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let t of teams">
+
+                    <td>
+                        {{ t.team_id }}
+                    </td>
+
+                    <td>
+                        {{ t.team_name }}
+                    </td>
+
+                    <td>
+
+                        <span class="badge-status">
+
+                            {{ t.status }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="d-flex gap-2">
+
+                            <button class="btn btn-outline-primary btn-sm" (click)="editRow(t)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-outline-danger btn-sm" (click)="deleteRow(t.team_id)">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <tr *ngIf="teams.length === 0">
+
+                    <td colspan="4" class="text-center text-muted py-4">
+
+                        No Teams Found
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

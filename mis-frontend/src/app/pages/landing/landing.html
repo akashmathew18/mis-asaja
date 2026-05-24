@@ -1,0 +1,50 @@
+<!--=====================HTML=====================-->
+
+<div class="landing-wrapper">
+    <!-- HEADER -->
+    <header class="top-section">
+        <div class="brand"><span class="brand-dot"></span>
+            <h1 class="page-title">Select Firm</h1>
+        </div>
+        <div class="top-actions">
+            <!-- ADMIN -->
+            <button *ngIf="role === 'Admin'" class="btn btn-admin" (click)="goAdmin()">
+                <span class="btn-icon">⚙</span>
+                Admin Dashboard
+            </button>
+
+            <!-- LOGOUT -->
+            <button class="btn btn-logout" (click)="logout()">
+                <span class="btn-icon">↩</span>
+                Logout
+            </button>
+        </div>
+
+    </header>
+    <!-- LOADING -->
+
+    <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading firms…</p>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" *ngIf="!loading && firms.length === 0">
+        <p>No firms available.</p>
+    </div>
+
+    <!-- FIRM GRID -->
+    <div class="firm-grid" *ngIf="!loading && firms.length > 0">
+        <div class="firm-card" *ngFor="let f of firms">
+            <div class="firm-card-body">
+                <div class="firm-avatar">
+                    {{f.firm_name.charAt(0)}}
+
+                </div>
+                <h2 class="firm-name"> {{f.firm_name}}
+
+                </h2>
+            </div><button class="btn btn-enter" (click)="openFirm(f)">Enter <span class="arrow">→</span></button>
+        </div>
+    </div>
+</div>

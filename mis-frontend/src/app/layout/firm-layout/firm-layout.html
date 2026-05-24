@@ -1,0 +1,36 @@
+<!-- Toggle Button - Outside Navbar, Right Side -->
+<button class="navbar-toggle-btn" [class.navbar-hidden]="!isNavbarVisible" (click)="toggleNavbar()">
+  <span class="toggle-icon">{{ isNavbarVisible ? '▲' : '▼' }}</span>
+</button>
+
+<!-- Fixed Navbar (conditionally shown) -->
+<div class="fixed-navbar" *ngIf="isNavbarVisible">
+  <nav class="navbar navbar-dark bg-dark px-3">
+    <span class="navbar-brand">
+      {{ firmName }}
+    </span>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-light btn-sm" (click)="goDashboard()">
+        Dashboard
+      </button>
+
+      <button *ngIf="module === 'pmu'" class="btn btn-outline-light btn-sm" (click)="goReports()">
+        Reports
+      </button>
+
+      <button class="btn btn-outline-warning btn-sm" (click)="backToFirms()">
+        Firms
+      </button>
+
+      <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- Main content with dynamic top padding -->
+<div class="container-fluid mt-3" [class.navbar-hidden]="!isNavbarVisible">
+  <router-outlet></router-outlet>
+</div>

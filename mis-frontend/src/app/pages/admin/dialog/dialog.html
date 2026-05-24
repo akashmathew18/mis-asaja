@@ -1,0 +1,39 @@
+<!-- dialog.component.html -->
+<div class="dialog-overlay" *ngIf="visible" [class.overlay-visible]="animationState === 'visible'"
+    (click)="onBackdropClick($event)">
+
+    <div class="dialog-container" [class.container-visible]="animationState === 'visible'"
+        [class.dialog-success]="config?.type === 'success'" [class.dialog-error]="config?.type === 'error'"
+        [class.dialog-warning]="config?.type === 'warning'" [class.dialog-info]="config?.type === 'info'" role="dialog"
+        aria-modal="true" [attr.aria-label]="config?.title">
+
+        <!-- Close button (top-right) -->
+        <button class="dialog-close-btn" (click)="onClose()" aria-label="Close dialog" title="Close">
+            ✕
+        </button>
+
+        <!-- Header with type-specific styling -->
+        <div class="dialog-header" [class]="getHeaderClass()">
+            <div class="dialog-icon" [class]="'icon-' + config?.type">
+                {{ config ? getIconForType(config.type) : '' }}
+            </div>
+            <h2 class="dialog-title">{{ config?.title }}</h2>
+        </div>
+
+        <!-- Message Body -->
+        <div class="dialog-body">
+            <p class="dialog-message">{{ config?.message }}</p>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="dialog-footer">
+            <button class="dialog-btn dialog-btn-create" *ngIf="config?.showCreateAnother" (click)="onCreateAnother()">
+                {{ config?.createAnotherText || 'Create Another' }}
+            </button>
+            <button class="dialog-btn dialog-btn-ok" (click)="onOk()">
+                {{ config?.okText || 'OK' }}
+            </button>
+        </div>
+
+    </div>
+</div>

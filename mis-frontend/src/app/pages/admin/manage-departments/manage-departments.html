@@ -1,0 +1,107 @@
+<div class="container mt-4">
+
+    <h3 class="text-center mb-4">
+        Manage Departments
+    </h3>
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-end mb-4">
+
+        <button class="btn btn-dashboard" (click)="backToDashboard()">
+            Back to Dashboard
+        </button>
+
+    </div>
+
+    <!-- FORM -->
+
+    <div class="card p-4 mb-4">
+
+        <div class="row g-3 align-items-end">
+
+            <div class="col-md-8">
+
+                <label>
+                    <strong>Department Name</strong>
+                </label>
+
+                <input class="form-control" placeholder="Enter department name" [(ngModel)]="form.dept_name" />
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="action-row">
+
+                    <button class="btn btn-save" (click)="save()">
+                        {{ editing ? 'Update' : 'Create' }}
+                    </button>
+
+                    <button *ngIf="editing" class="btn btn-cancel" (click)="reset()">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="card p-4">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th class="action-button">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of departments">
+                        <td> {{ d.dept_id }} </td>
+                        <td> {{ d.dept_name }} </td>
+
+                        <td>
+
+                            <div class="d-flex gap-2 justify-content-center">
+
+                                <button class="btn btn-sm btn-primary" (click)="edit(d)">
+                                    Edit
+                                </button>
+
+                                <button class="btn btn-sm" [ngClass]="
+                d.data_status === 'Active'
+                    ? 'btn-danger'
+                    : 'btn-success'
+            " (click)="toggleStatus(d)">
+                                    {{
+                                    d.data_status === 'Active'
+                                    ? 'Deactivate'
+                                    : 'Activate'
+                                    }}
+                                </button>
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<app-dialog></app-dialog>

@@ -1,0 +1,65 @@
+<div class="container mt-4">
+
+    <h3 class="text-center mb-1">
+        {{ user?.full_name || user?.username }}
+    </h3>
+
+    <h5 class="text-center text-muted mb-4">
+        Admin Dashboard
+    </h5>
+
+    <!-- HEADER ACTIONS -->
+    <div class="d-flex justify-content-end mb-4 gap-2">
+
+        <button class="btn btn-outline-primary btn-sm" (click)="backToFirms()">
+            Back to Firms
+        </button>
+
+        <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+            Logout
+        </button>
+
+    </div>
+
+    <!-- NAVIGATION CARDS -->
+    <div class="row">
+
+        <div class="col-md-4 mb-4" (click)="go('users')">
+            <div class="card h-100 text-center p-4">
+                <h5>Manage Users</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4" (click)="go('executives')">
+            <div class="card h-100 text-center p-4">
+                <h5>Manage Executives</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4" (click)="go('firms')">
+            <div class="card h-100 text-center p-4">
+                <h5>Manage Firms</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4" (click)="go('organizations')">
+            <div class="card h-100 text-center p-4">
+                <h5>Manage Organizations</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4" (click)="go('divisions')">
+            <div class="card h-100 text-center p-4">
+                <h5>Manage Divisions</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4" (click)="go('departments')">
+            <div class="card h-100 text-center p-4">
+                <h5>Manage Departments</h5>
+            </div>
+        </div>
+
+    </div>
+
+</div>

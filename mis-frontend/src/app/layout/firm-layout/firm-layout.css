@@ -1,0 +1,124 @@
+/* Fixed Navbar */
+.fixed-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    transition: transform 0.3s ease;
+}
+
+.navbar.bg-dark {
+    background: linear-gradient(90deg, #0f172a, #1e293b) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1.5rem;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.3px;
+}
+
+.navbar-brand small {
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.btn-outline-light,
+.btn-outline-warning,
+.btn-outline-danger {
+    border-radius: 40px;
+    padding: 0.3rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-outline-light:hover {
+    background: white;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+
+/* ====================
+   TOGGLE BUTTON (Right side, below navbar)
+   ==================== */
+.navbar-toggle-btn {
+    position: fixed;
+    top: 80px;
+    /* Just below the navbar (adjust if navbar height differs) */
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1040;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-toggle-btn:hover {
+    background: #0f172a;
+    transform: scale(1.08);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* When navbar is hidden, button moves up to top-right corner */
+.navbar-toggle-btn.navbar-hidden {
+    top: 16px;
+    background: #2d3748;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-toggle-btn.navbar-hidden:hover {
+    background: #1e293b;
+}
+
+.toggle-icon {
+    line-height: 1;
+    font-size: 1rem;
+}
+
+/* Content adjustment */
+.container-fluid {
+    transition: padding-top 0.3s ease;
+    padding-top: 80px;
+    /* height of navbar + some spacing */
+}
+
+.container-fluid.navbar-hidden {
+    padding-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-toggle-btn {
+        top: 70px;
+        right: 15px;
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .navbar-toggle-btn.navbar-hidden {
+        top: 12px;
+    }
+
+    .container-fluid {
+        padding-top: 70px;
+    }
+
+    .container-fluid.navbar-hidden {
+        padding-top: 15px;
+    }
+}

@@ -1,0 +1,311 @@
+<div class="container-fluid dashboard-wrapper py-4">
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+    <div class="row mb-5">
+
+        <div class="col-12 text-center">
+
+            <h2 class="dashboard-title">
+
+                {{ firmName }} - Dashboard
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+         SUMMARY CARDS
+    ===================================================== -->
+    <div class="row g-4 justify-content-center mb-5">
+
+        <!-- TOTAL TENDERS -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title text-secondary">
+
+                    Total Tenders
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    {{ totals.total_tenders }}
+
+                </h1>
+
+                <div class="mt-3 small fw-semibold">
+
+                    <span class="text-success">
+
+                        Online: {{ totals.online }}
+
+                    </span>
+
+                    <span class="mx-2 text-muted">|</span>
+
+                    <span class="text-dark">
+
+                        Offline: {{ totals.offline }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- WAITING -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title text-warning">
+
+                    Awaiting Confirmation
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    {{ totals.waiting }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+        <!-- CONFIRMED -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title text-success">
+
+                    Confirmed Tenders
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    {{ totals.confirmed_tenders }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+        <!-- REJECTED -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title text-danger">
+
+                    Rejected Tenders
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    {{ totals.rejected_tenders }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+         SECOND ROW
+    ===================================================== -->
+    <div class="row g-4 justify-content-center mb-5">
+
+        <!-- ACTIVE -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title active-text">
+
+                    Active Projects
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    {{ totals.active_tenders }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+        <!-- CLOSED -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title closed-text">
+
+                    Closed Projects
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    {{ totals.closed_tenders }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+        <!-- EXPENSE -->
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <div class="dashboard-card">
+
+                <h5 class="card-title text-danger">
+
+                    Total Expense
+
+                </h5>
+
+                <h1 class="card-value">
+
+                    ₹ {{ totals.total_expense | number:'1.0-0' }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+         MODULE CARDS
+    ===================================================== -->
+    <div class="row g-4">
+
+        <!-- UPCOMING -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('upcoming-tenders')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    Upcoming Tenders
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <!-- TENDER ENTRY -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('tender-entry')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    Tender Entry
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <!-- TENDER LIST -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('tender-list')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    Tender List
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <!-- SUPPLY -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('tender-supply-order')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    Supply Orders
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <!-- EXPENSE -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('tender-expense-ledger')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    Tender Expenses
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <!-- RECEIVABLES -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('tender-receivables')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    Receivables
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <!-- OTHER EXPENSE -->
+        <div class="col-lg-4 col-md-6 col-sm-12" (click)="goTo('tender-other-expense')">
+
+            <div class="module-card">
+
+                <h4>
+
+                    All Other Expenses
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

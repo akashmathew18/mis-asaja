@@ -1,0 +1,263 @@
+<div class="container mt-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>Asset Ledger</h4>
+
+        <div class="card p-2 bg-success text-white">
+
+            <strong>
+
+                Total Asset Value:
+                ₹ {{ grandTotal | number:'1.2-2' }}
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <form #assetForm="ngForm" class="card p-3 mb-4">
+
+        <div class="row g-3">
+
+            <div class="col-md-4">
+                <label>Asset Name</label>
+                <input class="form-control" name="asset_name" [(ngModel)]="form.asset_name" required />
+            </div>
+
+            <div class="col-md-4">
+                <label>Company Name</label>
+                <input class="form-control" name="company_name" [(ngModel)]="form.company_name" required />
+            </div>
+
+            <div class="col-md-4">
+                <label>Purchase Date</label>
+                <input type="date" class="form-control" name="purchase_date" [(ngModel)]="form.purchase_date"
+                    required />
+            </div>
+
+            <div class="col-md-3">
+                <label>Warranty</label>
+                <select class="form-control" name="warranty" [(ngModel)]="form.warranty" (change)="onWarrantyChange()"
+                    required>
+                    <option value="" disabled>Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="col-md-3" *ngIf="form.warranty === 'Yes'">
+                <label>Warranty Expiry</label>
+                <input type="date" class="form-control" name="warranty_expiry" [(ngModel)]="form.warranty_expiry"
+                    required />
+            </div>
+
+            <div class="col-md-3">
+                <label>Asset Amount</label>
+                <input type="number" class="form-control" name="asset_amount" [(ngModel)]="form.asset_amount" min="0"
+                    required />
+            </div>
+
+            <div class="col-md-6">
+                <label>Remarks</label>
+                <input class="form-control" name="remarks" [(ngModel)]="form.remarks" />
+            </div>
+
+        </div>
+
+        <button type="button" class="btn btn-success mt-3" [disabled]="assetForm.invalid || saving"
+            (click)="save(assetForm)">
+            {{ editMode ? 'Update' : 'Save' }}
+        </button>
+
+        <div *ngIf="successMsg" class="alert alert-success mt-3">
+            {{ lastAction === 'update'
+            ? 'Asset updated successfully'
+            : 'Asset added successfully'
+            }}
+        </div>
+
+    </form>
+
+    <div class="card p-3 mb-3">
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+
+                <label>Search</label>
+
+                <input type="text" class="form-control" placeholder="Asset / Company / Remarks" [(ngModel)]="search"
+                    (ngModelChange)="triggerLiveFilter()">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label>Company</label>
+
+                <input type="text" class="form-control" placeholder="Filter company" [(ngModel)]="companyFilter"
+                    (ngModelChange)="triggerLiveFilter()">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label>Warranty</label>
+
+                <select class="form-control" [(ngModel)]="warrantyFilter" (change)="triggerLiveFilter()">
+
+                    <option value="">
+                        All
+                    </option>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label>Date</label>
+
+                <input type="date" class="form-control" [(ngModel)]="singleDate" (ngModelChange)="triggerLiveFilter()">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label>From</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="triggerLiveFilter()">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label>To</label>
+
+                <input type="date" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="triggerLiveFilter()">
+
+            </div>
+
+        </div>
+
+        <div class="mt-3 d-flex gap-2">
+
+            <button class="btn btn-primary" (click)="applyFilters()">
+
+                Search
+
+            </button>
+
+            <button class="btn btn-secondary" (click)="resetFilters()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <h5>Asset List</h5>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Asset</th>
+                    <th>Company</th>
+                    <th>Amount</th>
+                    <th>Warranty</th>
+                    <th>Expiry</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of filteredList">
+                    <td>{{ r.purchase_date }}</td>
+                    <td>{{ r.asset_name }}</td>
+                    <td>{{ r.company_name }}</td>
+                    <td>{{ r.asset_amount }}</td>
+                    <td>{{ r.warranty }}</td>
+                    <td>{{ r.warranty_expiry || '-' }}</td>
+                    <td>{{ r.remarks || '-' }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" (click)="editRow(r)">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteRow(r.asset_id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot class="table-light">
+
+                <tr>
+
+                    <th colspan="3">
+                        TOTAL
+                    </th>
+
+                    <th>
+                        ₹ {{ footerTotals.grand_total | number:'1.2-2' }}
+                    </th>
+
+                    <th colspan="4"></th>
+
+                </tr>
+
+            </tfoot>
+        </table>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <div>
+
+                Total Records:
+                {{ totalRecords }}
+
+            </div>
+
+            <div class="btn-group">
+
+                <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage - 1)"
+                    [disabled]="currentPage === 1">
+
+                    Prev
+
+                </button>
+
+                <button class="btn btn-sm btn-primary">
+
+                    {{ currentPage }}
+
+                </button>
+
+                <button class="btn btn-sm btn-outline-primary" (click)="changePage(currentPage + 1)"
+                    [disabled]="currentPage === totalPages">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

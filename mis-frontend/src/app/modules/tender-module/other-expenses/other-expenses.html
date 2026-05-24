@@ -1,0 +1,171 @@
+<div class="container-fluid mt-3">
+
+    <!-- ===================================== -->
+    <!-- FORM -->
+    <!-- ===================================== -->
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="mb-4">
+            {{ isEdit ? 'Update Expense' : 'Add Expense' }}
+        </h4>
+
+        <div class="row g-3">
+
+            <!-- DATE -->
+
+            <div class="col-md-3">
+                <label class="form-label">Expense Date</label>
+
+                <input type="date" class="form-control" [(ngModel)]="form.expense_date">
+            </div>
+
+            <!-- TITLE -->
+            <div class="col-md-3 position-relative" (click)="preventClose($event)">
+
+                <label class="form-label">
+                    Expense Title
+                </label>
+
+                <input type="text" class="form-control" placeholder="Search expense title..."
+                    [(ngModel)]="expenseSearch" (focus)="showExpenseDropdown = true" (input)="filterExpenseTitles()">
+
+                <!-- DROPDOWN -->
+
+                <div class="expense-dropdown" *ngIf="showExpenseDropdown">
+
+                    <div class="expense-item" *ngFor="let item of filteredExpenseTitles"
+                        (click)="selectExpenseTitle(item)">
+                        {{ item.exp_name }}
+                    </div>
+
+                    <div class="expense-empty" *ngIf="filteredExpenseTitles.length === 0">
+                        No results found
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- AMOUNT -->
+
+            <div class="col-md-2">
+                <label class="form-label">Amount</label>
+
+                <input type="number" class="form-control" [(ngModel)]="form.amount">
+            </div>
+
+            <!-- REMARKS -->
+
+            <div class="col-md-4">
+                <label class="form-label">Remarks</label>
+
+                <input type="text" class="form-control" [(ngModel)]="form.remarks">
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+
+        <div class="mt-4 d-flex gap-2">
+
+            <button class="btn btn-primary" (click)="saveExpense()">
+                {{ isEdit ? 'Update' : 'Save' }}
+            </button>
+
+            <button class="btn btn-secondary" *ngIf="isEdit" (click)="resetForm()">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- TABLE -->
+    <!-- ===================================== -->
+
+    <div class="card shadow-sm p-4">
+
+        <h4 class="mb-3">
+            Expense List
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Expense Title</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
+                        <th width="140">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let row of expenses; let i = index">
+
+                        <td>
+                            {{ i + 1 }}
+                        </td>
+
+                        <td>
+                            {{ row.expense_date }}
+                        </td>
+
+                        <td>
+                            {{ row.expense_title }}
+                        </td>
+
+                        <td>
+                            {{ row.amount }}
+                        </td>
+
+                        <td>
+                            {{ row.remarks }}
+                        </td>
+
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+                                <button class="btn btn-sm btn-warning" (click)="editExpense(row)">
+                                    Edit
+                                </button>
+
+                                <button class="btn btn-sm btn-danger" (click)="deleteExpense(row)">
+                                    Delete
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="expenses.length == 0">
+
+                        <td colspan="6" class="text-center text-muted">
+                            No expenses found
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

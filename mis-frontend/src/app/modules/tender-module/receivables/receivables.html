@@ -1,0 +1,218 @@
+<!-- receivables.html -->
+
+<div class="container-fluid py-4">
+
+    <!-- =====================================================
+    HEADER
+    ====================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            Receivables Dashboard
+        </h2>
+
+    </div>
+
+    <!-- =====================================================
+    LOADING
+    ====================================================== -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- =====================================================
+    TABLE
+    ====================================================== -->
+
+    <div class="table-responsive receivable-table" *ngIf="!loading">
+
+        <table class="table table-bordered align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Project</th>
+
+                    <th>Division</th>
+
+                    <th>Executive</th>
+
+                    <th>Receivable</th>
+
+                    <th>Received</th>
+
+                    <th>TDS</th>
+
+                    <th>EMD Hold</th>
+
+                    <th>Pending</th>
+
+                    <th>Status</th>
+
+                    <th width="120">
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let t of receivables" [ngClass]="getRowClass(t)">
+
+                    <!-- ID -->
+
+                    <td class="fw-semibold">
+
+                        {{ t.tender_id }}
+
+                    </td>
+
+                    <!-- PROJECT -->
+
+                    <td>
+
+                        {{ t.project_name }}
+
+                    </td>
+
+                    <!-- DIVISION -->
+
+                    <td>
+
+                        {{ t.div_name }}
+
+                    </td>
+
+                    <!-- EXEC -->
+
+                    <td>
+
+                        {{ t.exec_name }}
+
+                    </td>
+
+                    <!-- RECEIVABLE -->
+
+                    <td>
+
+                        ₹
+                        {{
+                        formatAmount(
+                        t.negotiated_amount ||
+                        t.quoted_amount
+                        )
+                        }}
+
+                    </td>
+
+                    <!-- RECEIVED -->
+
+                    <td>
+
+                        ₹
+                        {{
+                        formatAmount(
+                        t.received_amount
+                        )
+                        }}
+
+                    </td>
+
+                    <!-- TDS -->
+
+                    <td>
+
+                        ₹
+                        {{
+                        formatAmount(
+                        t.tds_amount
+                        )
+                        }}
+
+                    </td>
+
+                    <!-- EMD -->
+
+                    <td>
+
+                        <span *ngIf="t.emd_hold === 'Yes'">
+
+                            Hold
+
+                        </span>
+
+                        <span *ngIf="t.emd_hold !== 'Yes'">
+
+                            —
+
+                        </span>
+
+                    </td>
+
+                    <!-- BALANCE -->
+
+                    <td class="pending-cell">
+
+                        ₹
+                        {{
+                        formatAmount(
+                        t.balance_amount
+                        )
+                        }}
+
+                    </td>
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status-pill">
+
+                            {{ t.status_label }}
+
+                        </span>
+
+                    </td>
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <button class="btn-open" (click)="openTender(t.tender_id)">
+
+                            Open
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                <!-- EMPTY -->
+
+                <tr *ngIf="receivables.length === 0">
+
+                    <td colspan="11" class="text-center text-muted py-4">
+
+                        No receivables found
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

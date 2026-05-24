@@ -1,0 +1,315 @@
+<!-- supply-order.html -->
+
+<div class="container-fluid py-3">
+
+    <!-- ======================================================
+    HEADER
+    ====================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="page-title mb-0">
+                Supply Orders
+            </h2>
+
+            <small class="text-muted">
+                Track billed, supplied and pending tenders
+            </small>
+        </div>
+
+        <div class="search-box">
+            <input type="text" class="form-control" placeholder="Search project / division / executive"
+                [(ngModel)]="search" (input)="filterTenders()">
+        </div>
+
+    </div>
+
+    <!-- ======================================================
+    LOADING
+    ====================================================== -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- ======================================================
+    CARDS
+    ====================================================== -->
+
+    <div class="row g-4" *ngIf="!loading">
+
+        <div class="col-xl-4 col-lg-6 col-md-6" *ngFor="let t of filteredTenders">
+
+            <div class="supply-card" (click)="openTender(t)">
+
+                <!-- TENDER ID -->
+                <div class="fw-bold tender-id">
+
+                    {{ t.tender_id }}
+
+                </div>
+
+                <!-- PROJECT -->
+                <div class="project-name">
+
+                    {{ t.project_name }}
+
+                </div>
+
+                <!-- DIVISION + EXEC -->
+                <div class="meta-text">
+
+                    {{ t.div_name }}
+                    •
+                    {{ t.exec_name }}
+
+                </div>
+
+                <hr>
+
+                <!-- RECEIVABLE -->
+                <div class="d-flex justify-content-between info-row">
+
+                    <span>Receivable</span>
+
+                    <span class="fw-bold">
+                        ₹ {{ formatAmount(t.negotiated_amount || t.quoted_amount) }}
+                    </span>
+
+                </div>
+
+                <!-- RECEIVED -->
+                <div class="d-flex justify-content-between info-row">
+
+                    <span>Received</span>
+
+                    <span class="fw-bold">
+                        ₹ {{ formatAmount(t.received_amount) }}
+                    </span>
+
+                </div>
+
+                <!-- TDS -->
+                <div class="d-flex justify-content-between info-row">
+
+                    <span>TDS Amount</span>
+
+                    <span class="fw-bold">
+                        ₹ {{ formatAmount(t.tds_amount) }}
+                    </span>
+
+                </div>
+
+                <!-- EMD -->
+                <div class="d-flex justify-content-between info-row">
+
+                    <span>EMD/RD</span>
+
+                    <span class="fw-bold">
+                        ₹ {{ formatAmount(t.emd_rd_amount) }}
+                    </span>
+
+                </div>
+
+                <!-- BALANCE -->
+                <div class="d-flex justify-content-between info-row">
+
+                    <span>Pending</span>
+
+                    <span class="fw-bold text-danger">
+                        ₹ {{ formatAmount(t.balance_amount) }}
+                    </span>
+
+                </div>
+
+                <!-- STATUS -->
+                <div class="mt-3">
+
+                    <span class="status-pill">
+
+                        {{ t.status_label }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ======================================================
+DETAIL MODAL
+====================================================== -->
+
+<div class="dialog-backdrop" *ngIf="selectedTender" (click)="closeDialog()"></div>
+
+<div class="detail-dialog" *ngIf="selectedTender">
+
+    <!-- HEADER -->
+    <div class="dialog-header">
+
+        <div class="dialog-title">
+
+            {{ selectedTender.tender_id }}
+            -
+            {{ selectedTender.project_name }}
+
+        </div>
+
+        <button class="btn-close-custom" (click)="closeDialog()">
+            ×
+        </button>
+
+    </div>
+
+    <!-- BODY -->
+    <div class="dialog-body">
+
+        <div class="row g-3">
+
+            <!-- EXEC -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Executive:
+                </div>
+
+                <div>
+                    {{ selectedTender.exec_name }}
+                </div>
+
+            </div>
+
+            <!-- DIVISION -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Division:
+                </div>
+
+                <div>
+                    {{ selectedTender.div_name }}
+                </div>
+
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Status:
+                </div>
+
+                <div>
+                    {{ selectedTender.status_label }}
+                </div>
+
+            </div>
+
+            <!-- SUPPLY DATE -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Supply Issued:
+                </div>
+
+                <div>
+                    {{
+                    selectedTender.supply_issue_datetime
+                    | date:'yyyy-MM-dd HH:mm:ss'
+                    }}
+                </div>
+
+            </div>
+
+            <!-- DELIVERY -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Delivery Due:
+                </div>
+
+                <div>
+                    {{
+                    selectedTender.item_delivery_due_date
+                    | date:'yyyy-MM-dd'
+                    }}
+                </div>
+
+            </div>
+
+            <!-- BILL DATE -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Billed Date:
+                </div>
+
+                <div>
+
+                    {{
+                    selectedTender.billed_date
+                    ?
+                    (selectedTender.billed_date | date:'yyyy-MM-dd')
+                    :
+                    '—'
+                    }}
+
+                </div>
+
+            </div>
+
+            <!-- RECEIVABLE -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Receivable:
+                </div>
+
+                <div>
+                    ₹
+                    {{
+                    formatAmount(
+                    selectedTender.negotiated_amount
+                    ||
+                    selectedTender.quoted_amount
+                    )
+                    }}
+                </div>
+
+            </div>
+
+            <!-- PENDING -->
+            <div class="col-md-4">
+
+                <div class="label">
+                    Pending:
+                </div>
+
+                <div class="text-danger fw-bold">
+                    ₹ {{ formatAmount(selectedTender.balance_amount) }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="dialog-footer">
+
+        <button class="btn btn-primary rounded-pill px-4" (click)="openWorkflow(selectedTender.tender_id)">
+            Open Workflow
+        </button>
+
+    </div>
+
+</div>

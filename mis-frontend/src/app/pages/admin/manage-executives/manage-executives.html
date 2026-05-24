@@ -1,0 +1,168 @@
+<div class="container mt-4">
+
+    <h3 class="text-center mb-4">Manage Executives</h3>
+
+    <!-- ================= HEADER ACTIONS ================= -->
+
+    <div class="d-flex justify-content-end mb-4">
+
+        <button class="btn btn-dashboard" (click)="backToDashboard()">
+
+            Back to Dashboard
+
+        </button>
+
+    </div>
+
+    <!-- ================= FORM CARD ================= -->
+    <div class="card p-4 mb-4">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <input class="form-control" placeholder="Executive Name" [(ngModel)]="form.exec_name">
+            </div>
+
+            <div class="col-md-4">
+                <input class="form-control" placeholder="Mobile Number" [(ngModel)]="form.mobile">
+            </div>
+
+            <div class="col-md-4 d-flex align-items-center exec-id-box">
+
+                <strong *ngIf="editing">
+                    Executive ID: {{ form.exec_id }}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <!-- ================= FIRM ASSIGN ================= -->
+
+        <div class="row mt-3">
+
+            <div class="col-md-12">
+
+                <label>
+                    <strong>Assign Firms:</strong>
+                </label>
+
+                <div class="firm-grid">
+
+                    <div *ngFor="let f of firms">
+
+                        <input type="checkbox" [checked]="form.firms.includes(f.firm_code)"
+                            (change)="toggleFirm(f.firm_code)">
+
+                        {{ f.short_name }} - {{ f.firm_name }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= ACTION BUTTONS ================= -->
+
+        <div class="mt-3">
+
+            <button class="btn btn-success" [disabled]="loading" (click)="save()">
+
+                {{ editing ? 'Update Executive' : 'Create Executive' }}
+
+            </button>
+
+            <button *ngIf="editing" class="btn btn-cancel" (click)="reset()">
+
+                Cancel Edit
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================= TABLE CARD ================= -->
+
+    <div class="card p-4">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered text-center">
+
+                <thead>
+
+                    <tr>
+                        <th>Executive ID</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Firms</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let e of executives">
+
+                        <td>{{ e.exec_id }}</td>
+
+                        <td>{{ e.exec_name }}</td>
+
+                        <td>{{ e.mobile || '—' }}</td>
+
+                        <td>{{ e.firm_names || '—' }}</td>
+
+                        <td>
+
+                            <span class="status-badge" [ngClass]="e.data_status === 'Active'
+            ? 'status-active'
+            : 'status-inactive'">
+
+                                {{ e.data_status }}
+
+                            </span>
+
+                        </td>
+
+                        <td class="d-flex gap-2">
+
+                            <!-- EDIT -->
+
+                            <button class="btn btn-sm btn-primary" (click)="edit(e)">
+
+                                Edit
+
+                            </button>
+
+                            <!-- ACTIVATE / DEACTIVATE -->
+
+                            <button class="btn btn-sm" [ngClass]="e.data_status === 'Active'
+                                    ? 'btn-danger'
+                                    : 'btn-success'" (click)="toggleStatus(e)">
+
+                                {{ e.data_status === 'Active'
+                                ? 'Deactivate'
+                                : 'Activate' }}
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<app-dialog></app-dialog>

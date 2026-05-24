@@ -1,0 +1,230 @@
+/* supply-order.css */
+
+.container-fluid {
+
+    padding-left: 24px;
+    padding-right: 24px;
+
+    min-height: 100vh;
+
+    background: #f5f7fb;
+}
+
+/* =====================================================
+HEADER
+===================================================== */
+
+.page-title {
+
+    font-size: 2rem;
+    font-weight: 700;
+
+    color: #082b61;
+}
+
+.search-box {
+
+    width: 320px;
+}
+
+/* =====================================================
+CARD
+===================================================== */
+
+.supply-card {
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.08);
+
+    height: 100%;
+}
+
+.supply-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.12);
+}
+
+.tender-id {
+
+    color: #0a2e66;
+
+    font-size: 1.6rem;
+
+    font-weight: 700;
+}
+
+.project-name {
+
+    color: #0050b8;
+
+    font-size: 1.15rem;
+
+    font-weight: 600;
+
+    margin-top: 4px;
+}
+
+.meta-text {
+
+    color: #666;
+
+    margin-top: 2px;
+
+    font-size: 14px;
+}
+
+.info-row {
+
+    margin-bottom: 8px;
+
+    font-size: 15px;
+}
+
+.status-pill {
+
+    background: #082b61;
+
+    color: white;
+
+    padding: 5px 14px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+/* =====================================================
+MODAL
+===================================================== */
+
+.dialog-backdrop {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.35);
+
+    z-index: 999;
+}
+
+.detail-dialog {
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 900px;
+    max-width: 95%;
+
+    background: white;
+
+    border-radius: 24px;
+
+    z-index: 1000;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.dialog-header {
+
+    padding: 22px 24px;
+
+    border-bottom:
+        1px solid #e8edf5;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.dialog-title {
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    color: #0b2f68;
+}
+
+.btn-close-custom {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 38px;
+
+    line-height: 1;
+
+    color: #777;
+
+    cursor: pointer;
+}
+
+.dialog-body {
+
+    padding: 24px;
+}
+
+.label {
+
+    font-weight: 700;
+
+    color: #425466;
+
+    margin-bottom: 4px;
+}
+
+.dialog-footer {
+
+    padding: 18px 24px;
+
+    border-top:
+        1px solid #e8edf5;
+
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media(max-width: 768px) {
+
+    .search-box {
+
+        width: 100%;
+    }
+
+    .page-title {
+
+        font-size: 1.6rem;
+    }
+
+}
